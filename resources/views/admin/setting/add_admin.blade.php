@@ -33,7 +33,7 @@
                                 <input type="text" name="shut_down_reason" id="phone" class="form-control"
                                     placeholder="meal_rate" aria-label="john.doe"
                                     aria-describedby="basic-default-phone" />
-                            </div>   
+                            </div>
                         </div>
                         @error('shut_down_reason')
                         <div class="text-danger">{{ $message }}</div>
@@ -57,6 +57,16 @@
                         </div>
                         @error('contact_number')
                         <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label" for="email">Cook salary</label>
+                        <div class="col-sm-10">
+                            <input type="number" name="cook_salary" class="form-control" id="cook_salary"
+                                placeholder="write amount" />
+                        </div>
+                        @error('cook_salary')
+                            <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="row mb-3">

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->tinyInteger('shut_down_app')->nullable();
             $table->text('shut_down_reason')->nullable();
             $table->string('contact_name')->nullable();
-            $table->integer('contact_number')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('cook_salary')->nullable();
             $table->time('meat_set_last_time')->nullable();
             $table->time('meal_set_alert_time')->nullable();
             $table->text('alert_text_for_all')->nullable();

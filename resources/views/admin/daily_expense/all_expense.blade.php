@@ -51,6 +51,11 @@
                             </td>
                         </tr>
                     @endforeach
+                        <tr>
+                            <td></td>
+                            <td colspan="4">Total Expense</td>
+                            <td >{{$total_expense}}</td>
+                        </tr>
                 </tbody>
             </table>
         </div>

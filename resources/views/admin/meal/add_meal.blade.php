@@ -26,9 +26,8 @@
                             <label class="col-sm-2 col-form-label" for="Serial">quantity</label>
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
-                                    <input type="number" name="quantity" id="phone" class="form-control"
-                                        placeholder="number" aria-label="john.doe"
-                                        aria-describedby="basic-default-phone" />
+                                    <input type="number" name="quantity" id="quantity" class="form-control"
+                                        placeholder="quantity" value="1" readonly/>
                                 </div>
                                 @error('quantity')
                                     <span class="text-danger">{{ $message }}</span>

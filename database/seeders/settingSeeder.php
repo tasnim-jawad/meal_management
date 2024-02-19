@@ -21,6 +21,7 @@ class settingSeeder extends Seeder
             'shut_down_reason' => 'my work is done for today',
             'contact_name' => 'ariful islam',
             'contact_number' => '+8801745964044', // Ensure it's a string
+            'cook_salary' => '5000',
             'meat_set_last_time' => '07:00',
             'meal_set_alert_time' => '2023-09-17 18:00:00',
             'alert_text_for_all' => '4',

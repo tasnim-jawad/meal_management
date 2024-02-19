@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h5>Booked Your Meal</h5>
+            <h5>Book Your Meal</h5>
         </div>
         <form action="{{ route('frontEnd.Booking.store') }}" method="post">
             @csrf
@@ -12,11 +12,11 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                @if (session('error_today'))
+                {{-- @if (session('error_today'))
                     <div class="alert alert-danger">
                         {{ session('error_today') }}
                     </div>
-                @endif
+                @endif --}}
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -27,7 +27,7 @@
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Quantity</label>
                             <div class="col-sm-9">
-                                <input type="number" name="quantity" class="form-control digits" placeholder="Number">
+                                <input type="number" name="quantity" class="form-control digits" placeholder="Number" value="1" readonly>
                             </div>
                             @error('quantity')
                                 <div class="alert alert-danger">{{ $message }}</div>

@@ -34,7 +34,7 @@ use Carbon\Carbon;
 |
 */
 Route::get('/', [frontEndController::class, 'index'])->name('/');
-Route::get('/Meal_Booking', [frontEndController::class, 'Meal_Booking'])->name('frontEnd.Meal_Booking.Meal_Booking')->middleware(['isuser']);;
+Route::get('/Meal_Booking', [frontEndController::class, 'Meal_Booking'])->name('frontEnd.Meal_Booking.Meal_Booking')->middleware(['isuser']);
 
 Route::prefix('register')->group(function(){
     Route::get('/register',[registerController::class,'register'])->name('frontEnd.register.register');
@@ -109,6 +109,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
         Route::post('/update/{id}', [mealController::class, 'update'])->name('admin.meal.update');
         Route::get('/delete/{id}', [mealController::class, 'delete'])->name('admin.meal.delete');
         Route::get('/search', [mealController::class, 'search'])->name('admin.meal.search');
+        Route::get('/print/{selectedDate?}', [mealController::class, 'download_pdf'])->name('admin.meal.print.download_pdf');
 
     });
 
@@ -134,7 +135,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
         Route::post('/store', [dailyExpenseController::class, 'store'])->name('admin.daily_expense.store');
         Route::get('/all_expense', [dailyExpenseController::class, 'all_expense'])->name('admin.daily_expense.all_expense');
         Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
-        Route::post('/update/{id}', [dailyExpenseConntroller::class, 'update'])->name('admin.daily_expense.update');
+        Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
         Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
         Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
 

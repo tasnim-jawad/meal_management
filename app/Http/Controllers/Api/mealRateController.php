@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\MonthlyMealRates;
+use App\Models\daily_expense;
+use App\Models\UserMeals;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +21,6 @@ class mealRateController extends Controller
         // Validate the form data if needed
         $validator = Validator::make($request->all(), [
             'month' => 'required',
-            'meal_rate' => 'required|numeric',
             'is_visible' => 'required|in:0,1',
             'month_start_date' => 'required|date',
             'month_end_date' => 'required|date|after:month_start_date',
@@ -30,10 +31,19 @@ class mealRateController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        $startDate =  $request->month_start_date;
+        $endDate =  $request->month_end_date;
+        // dd([$startDate,$endDate]);
+        $total_expense = daily_expense::whereBetween('bajar_date', [$startDate, $endDate])->sum('total');
+        // dd($total_expense);
+        $total_meal = UserMeals::whereBetween('date', [$startDate, $endDate])->sum('quantity');
+        // dd($total_meal);
+        $meal_rate =($total_expense / $total_meal);
+        // dd($meal_rate);
 
         $meal = new MonthlyMealRates();
         $meal->month = $request->month;
-        $meal->meal_rate = $request->meal_rate;
+        $meal->meal_rate = $meal_rate;
 
         if ($request->is_visible == 1) {
             $meal->is_visible = 1;

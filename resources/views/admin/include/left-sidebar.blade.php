@@ -1,7 +1,7 @@
 <ul class="menu-inner py-1">
     <!-- Dashboards -->
     <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{{route('admin.dashboard.home')}}" class="menu-link">
             <i class="fa-solid fa-house"style=margin:5px;></i>
             <div data-i18n="Dashboards">Dashboard</div>
         </a>
@@ -10,7 +10,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">User Management</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -33,7 +33,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">User Meals</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -46,7 +46,7 @@
                     <div data-i18n="show user">All Meal</div>
                 </a>
             </li>
-           
+
         </ul>
     </li>
        {{-- Meal rate --}}
@@ -54,7 +54,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">meal_rate</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -67,7 +67,7 @@
                     <div data-i18n="show user">All Meal Rate</div>
                 </a>
             </li>
-           
+
         </ul>
     </li>
 
@@ -77,7 +77,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">Expense</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -98,7 +98,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">User Due List</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -129,7 +129,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">User Meal Booking List</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -145,7 +145,7 @@
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">Meal Register</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -167,7 +167,7 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Users">User Payment</div>
-                <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+                {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
@@ -188,7 +188,7 @@
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
                 <div data-i18n="Users">Setting</div>
-                <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+                {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">

@@ -7,6 +7,7 @@ use App\Models\UserMeals;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class mealController extends Controller
 {
@@ -38,22 +39,22 @@ class mealController extends Controller
             'quantity' => 'required|integer|min:1', // Assuming quantity should be an integer greater than or equal to 1
             'date' => 'required|date', // Assuming date should be a valid date format
         ]);
-    
+
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator)
                 ->withInput();
         }
-    
+
         $meal = new UserMeals();
         $meal->user_id = $request->user_id;
         $meal->quantity = $request->quantity;
         $meal->date = $request->date;
         $meal->save();
-    
+
         return back()->with('message', 'Info saved successfully');
     }
-    
+
     // public function search(Request $request)
     // {
     //     $selectedMonth = $request->input('selectedMonth');
@@ -79,7 +80,10 @@ class mealController extends Controller
     public function all_meal()
     {
         return view('admin.meal.all_meal', [
-            'meals' => UserMeals::with('user')->get()
+            'meals' => UserMeals::with('user')
+                        ->orderBy('date', 'desc')
+                        ->latest()
+                        ->get()
         ]);
     }
 
@@ -140,4 +144,24 @@ class mealController extends Controller
     //     UserMeals::where('id', $id)->delete();
     //     return response()->json(['message' => 'Info delete successfully'], 200);
     // }
+
+    public function download_pdf($date = null){
+        $query  = UserMeals::with('user')
+                    ->orderBy('date', 'desc')
+                    ->latest();
+
+        // $selectedDate = $request->input('selectedDate');
+        // dd($date);
+        if($date){
+            $query = UserMeals::whereDate('date', $date)
+                            ->with('user')
+                            ->orderBy('date', 'desc')
+                            ->latest();
+        }
+        // dd($meals);
+        $meals = $query->get()->toArray();
+
+        $pdf = Pdf::loadView('admin.meal.meal_pdf',compact('meals'));
+        return $pdf->download('all_meal.pdf');
+    }
 }

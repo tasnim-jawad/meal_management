@@ -17,6 +17,7 @@
                 <button type="submit" class="btn btn-primary">Filter</button>
                 <a href="{{ route('admin.meal.all_meal') }}" class="btn btn-danger">Reset</a>
             </form>
+            <a href="{{ route('admin.meal.print.download_pdf',['selectedDate' => request('selectedDate')]) }}" class="btn btn-success">Download PDF</a>
         </div>
         <div class="card-datatable table-responsive">
             <table class="datatables-users table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
