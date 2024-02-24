@@ -17,12 +17,13 @@
                         <th>ID</th>
                         <th>shut_down_app</th>
                         <th>shut_down_reason</th>
-                        <th>contact_name</th> 
-                        <th>contact_number</th> 
-                        <th>meat_set_last_time</th> 
-                        <th>meal_set_alert_time</th> 
-                        <th>alert_text_for_all</th> 
-                        <th>today_meal_coocking_end_time</th>                     
+                        <th>contact_name</th>
+                        <th>contact_number</th>
+                        <th>Cook Salary</th>
+                        <th>meat_set_last_time</th>
+                        <th>meal_set_alert_time</th>
+                        <th>alert_text_for_all</th>
+                        <th>today_meal_coocking_end_time</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -32,14 +33,15 @@
                     @foreach($setting as $settings)
                         <tr>
                             <td>{{$i++}}</td>
-                            <td>{{$settings->shut_down_app}}</td>                                              
-                            <td>{{$settings->shut_down_reason}}</td> 
-                            <td>{{$settings->contact_name}}</td> 
-                            <td>{{$settings->contact_number}}</td> 
-                            <td>{{$settings->meat_set_last_time}}</td> 
-                            <td>{{$settings->meal_set_alert_time}}</td> 
-                            <td>{{$settings->alert_text_for_all}}</td> 
-                            <td>{{$settings->today_meal_coocking_end_time}}</td> 
+                            <td>{{$settings->shut_down_app}}</td>
+                            <td>{{$settings->shut_down_reason}}</td>
+                            <td>{{$settings->contact_name}}</td>
+                            <td>{{$settings->contact_number}}</td>
+                            <td>{{$settings->cook_salary}}</td>
+                            <td>{{$settings->meat_set_last_time}}</td>
+                            <td>{{$settings->meal_set_alert_time}}</td>
+                            <td>{{$settings->alert_text_for_all}}</td>
+                            <td>{{$settings->today_meal_coocking_end_time}}</td>
 
                             <td>
                                 <a href="{{ route('admin.setting.edit',$settings->id) }}" class="btn btn-primary">Edit</a>

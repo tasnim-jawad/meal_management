@@ -17,7 +17,7 @@ class frontEndBookingController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required',
+            'quantity' => 'required|integer|min:1|max:1',
             'date' => 'required',
         ]);
 
@@ -29,15 +29,21 @@ class frontEndBookingController extends Controller
         $selected_date = Carbon::parse($request->date)->format('Y-m-d');
         $current_date = Carbon::now()->format('Y-m-d');
         // @dd($current_date);
-        if ($selected_date === $current_date) {
-            return redirect()->back()->with('error_today', 'Cannot book a meal for today.');
-        } elseif ($selected_date < $current_date) {
+        if ($selected_date < $current_date) {
+            // return redirect()->back()->with('error_today', 'Cannot book a meal for today.');
             return redirect()->back()->with('error', 'Cannot book a meal for a past date.');
+
+        } elseif($selected_date === $current_date) {
+
+            $currentTime = Carbon::now();
+            $meal_set_last_time = Carbon::today()->setHour(7)->setMinute(0)->setSecond(0);
+            $message = 'Meals cannot be booked after 7:00 am';
+
+        }else{
+            $currentTime = Carbon::now();
+            $meal_set_last_time = Carbon::today()->addDay()->setHour(7)->setMinute(0)->setSecond(0);
+            $message = 'something wrong' ;
         }
-
-        $currentTime = Carbon::now();
-        $meal_set_last_time = Carbon::today()->setHour(18)->setMinute(0)->setSecond(0);
-
 
         if ($currentTime->lte($meal_set_last_time)) {
             $meals = new UserMeals();
@@ -47,8 +53,10 @@ class frontEndBookingController extends Controller
             $meals->save();
             return redirect()->back()->with('success', 'Meal booked successfully.');
         } else {
-            return redirect()->back()->with('error', 'Please contact the admin.');
+            return redirect()->back()->with('error', $message .'. Please contact the admin.');
         }
+
+
     }
 
 

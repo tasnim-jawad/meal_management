@@ -1,8 +1,8 @@
 @extends('admin.master')
 @section('content')
-   
+
     <div class="row">
-        <div class="col-xl-2 col-md-4 col-6 mb-4">
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
@@ -13,7 +13,7 @@
         </div>
 
         <!-- Total Sales -->
-        <div class="col-xl-2 col-md-4 col-6 mb-4">
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-info mb-2 rounded"><i class="ti ti-chart-bar ti-md"></i></div>
@@ -24,7 +24,7 @@
         </div>
 
         <!-- Total Profit -->
-        <div class="col-xl-2 col-md-4 col-6 mb-4">
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
             <a href="{{ route('admin.user.all_user') }}">
             <div class="card" style="height: 200px">
                 <div class="card-body">
@@ -36,9 +36,9 @@
              </a>
             </div>
         </div>
-        
-        <!-- Total Sales -->     
-        <div class="col-xl-2 col-md-4 col-6 mb-4">
+
+        <!-- Total Sales -->
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
             <a href="#">
             <div class="card" style="height: 200px">
                 <div class="card-body">
@@ -52,7 +52,7 @@
         </div>
 
         {{-- this month meal rate --}}
-        <div class="col-xl-2 col-md-4 col-6 mb-4">
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
             <a href="#">
             <div class="card" style="height: 200px">
                 <div class="card-body">
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    
+
     {{-- @push('cjs')
         <script src="/adminAsset/js/chartjs.js"></script>
         <script>
@@ -79,7 +79,7 @@
         </script>
 
         <script>
-            
+
             const ctx = document.getElementById('muliChart');
             ctx &&
                 new Chart(ctx, {
@@ -173,6 +173,6 @@
                         }
                     }
                 })
-        </script>       
+        </script>
     @endpush  --}}
 @endsection

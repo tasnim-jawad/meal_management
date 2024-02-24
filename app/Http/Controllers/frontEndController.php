@@ -47,7 +47,7 @@ class frontEndController extends Controller
     // }
 
     // public function Meal_Booking(){
-    //     $id = auth()->user()->id; 
+    //     $id = auth()->user()->id;
 
     //     $meal = UserMeals::where('user_id', $id)->sum('quantity');
     //     $payment = UserPayments::where('user_id', $id)->sum('amount');
@@ -81,7 +81,7 @@ class frontEndController extends Controller
     // }
 
     // public function Meal_Booking(){
-    //     $id = auth()->user()->id; 
+    //     $id = auth()->user()->id;
 
     //     $meal = UserMeals::where('user_id', $id)->sum('quantity');
     //     $payment = UserPayments::where('user_id', $id)->sum('amount');
@@ -107,13 +107,13 @@ class frontEndController extends Controller
     //         ->withSum('userMeal', 'quantity')
     //         ->first();
 
-    //     // dd($user); 
+    //     // dd($user);
 
     //     $total_payable = $mealRate * $user->userMeal_sum_quantity;
     //     // dd($total_payable,$user->userMeal_sum_quantity,$user,$mealRate,$this_month);
     //     $due = $total_payable - $user->userpayments_sum_amount;
 
-    //     // dd($due); 
+    //     // dd($due);
 
     //     return view('frontEnd.Meal_Booking.Meal_Booking', compact('meal', 'payment', 'user', 'due'));
     // }
@@ -122,6 +122,7 @@ class frontEndController extends Controller
     {
         $id = auth()->user()->id;
         $this_month = Carbon::today();
+        // dd($this_month);
         $Totalmeal = UserMeals::whereMonth('date', $this_month)->where('user_id', $id)->sum('quantity');
         $payment = UserPayments::where('user_id', $id)->sum('amount');
 

@@ -7,24 +7,24 @@
     Path: note.js
     Task edit task
 
-    1. sokal 7 ta meal er last time ajke
-    2. meal only one
-    3. batch no add hobe
-    4. date wise descending
-    5. pdf export meal list
-    6. auto meal rate calculate hobe.
+    1. sokal 7 ta meal er last time ajke        -->completed (only for user)
+    2. meal only one                            -->completed
+    3. batch no add hobe                        -->completed (batch_no with input field added in user table)
+    4. date wise descending                     -->completed
+    5. pdf export meal list                     -->completed
+    6. auto meal rate calculate hobe.           -->completed
 
-    7. khalar bill alada
+    7. khalar bill alada                        -->completed (cook_salary with input field added in setting table )
 
-    8. monthly total bill
-    9. staff mil alada hobe.
+    8. monthly total bill                       -->
+    9. staff mil alada hobe.                    -->
 
-    10. staff der jonno alada meal hobe.
+    10. staff der jonno alada meal hobe.        -->
 
-    11. login student and staff
+    11. login student and staff                 -->
 
-    12. payment e date auto selected
-    13. minimum
+    12. payment e date auto selected            -->completed
+    13. minimum                                 -->
 */
 
 

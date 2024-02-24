@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Dhaka',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,10 +157,10 @@ return [
     'providers' => [
         // ...
         Laravel\Jetstream\JetstreamServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+        // Barryvdh\DomPDF\ServiceProvider::class,
         // ...
     ],
-    
+
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
          * Package Service Providers...
@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+        // Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -189,9 +190,13 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        'PDF' => Barryvdh\DomPDF\Facade::class,
-        // 'Example' => App\Facades\Example::class,
-    ])->toArray(),
+    // 'aliases' => Facade::defaultAliases()->merge([
+    //     'PDF' => Barryvdh\DomPDF\Facade::class,
+    //     // 'Example' => App\Facades\Example::class,
+    // ])->toArray(),
+
+    // 'aliases' => [
+    //     'PDF' => Barryvdh\DomPDF\Facade::class,
+    // ],
 
 ];

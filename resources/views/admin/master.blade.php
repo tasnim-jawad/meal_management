@@ -144,15 +144,7 @@
                     </footer> --}}
                     <!-- / Footer -->
 
-                    <script>
-                        (function($) {
 
-                        }(jQuery));
-                        push.create('booked!', {
-                            Body: 'welcome'
-                            timeout: 5000
-                        });
-                    </script>
 
                     <div class="content-backdrop fade"></div>
                 </div>
@@ -195,16 +187,27 @@
 
     <!-- Page JS -->
 
-
-
     @yield('scripts')
     @stack('cjs')
 
     <script>
+        // (function($) {
+        //     $(document).ready(function() {
+        //         // $('.meal_user').select2();
+        //     });
+        // }(jQuery));
+        // push.create('booked!', {
+        //     body: 'welcome',
+        //     timeout: 5000
+        // });
+
         $(document).ready(function() {
             $('.meal_user').select2();
         });
+        // $('.meal_user').select2();
     </script>
+
+    @stack('end_js')
 </body>
 
 </html>

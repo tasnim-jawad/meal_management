@@ -26,8 +26,9 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01874324205',
             'Telegram' => '01874324205',
             'department' => 'IT',
+            'batch_no' => '11',
             'address' => 'Mirpur,Dhaka',
-            
+
         ]);
 
         User::create([
@@ -40,6 +41,7 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01874324201',
             'Telegram' => '01874324201',
             'department' => 'IELTS',
+            'batch_no' => '22',
             'address' => 'Mirpur,Dhaka',
         ]);
 
@@ -53,6 +55,7 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01874322546',
             'Telegram' => '01874322546',
             'department' => 'Spoken',
+            'batch_no' => '33',
             'address' => 'Mirpur,Dhaka',
         ]);
 
@@ -66,6 +69,7 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01992799003',
             'Telegram' => '01992799003',
             'department' => 'IT',
+            'batch_no' => '44',
             'address' => 'Mirpur,Dhaka',
         ]);
     }

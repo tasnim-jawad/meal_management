@@ -67,14 +67,24 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="role">Department</label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="department" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
+                                <select class="form-select meal_user" name="department" >
+                                    <option selected disabled>Open this select menu</option>
                                     @foreach (App\Models\Department::get() as $depart)
                                         <option value="{{ $depart->id }}">{{ $depart->department }}</option>
                                     @endforeach
                                 </select>
                                 @error('department')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="role">Batch Number</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="batch_no" id="batch_no" class="form-control" placeholder="enter batch number" />
+
+                                @error('batch_no')
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -107,16 +117,15 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="email">Email</label>
                             <div class="col-sm-10">
-                                <input type="text" name="email" class="form-control" id="email"
-                                    placeholder="email" />
-                                    @error('email')
+                                <input type="text" name="email" class="form-control" id="email" placeholder="email" />
+                                @error('email')
                                     <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                @enderror
                             </div>
-                          
+
 
                         </div>
-              
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="address">Address</label>
                             <div class="col-sm-10">
@@ -134,7 +143,7 @@
                                     placeholder="password" />
                                     @error('password')
                                     <div class="text-danger">{{ $message }}</div>
-                                    @enderror  
+                                    @enderror
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -145,9 +154,9 @@
                             </div>
                             @error('password_confirmation')
                             <div class="text-danger">{{ $message }}</div>
-                            @enderror 
+                            @enderror
                         </div>
-                    
+
                         <div class="row justify-content-end">
                             <div class="col-sm-10">
                                 <button type="submit" class="btn btn-primary">Send</button>
@@ -158,3 +167,9 @@
         </div>
         </form>
     @endsection
+
+    @push('end_js')
+        <script>
+            // $('.meal_user').select2();
+        </script>
+    @endpush

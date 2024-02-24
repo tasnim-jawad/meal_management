@@ -7,20 +7,20 @@
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Search -->
-        <div class="navbar-nav align-items-center">
+        {{-- <div class="navbar-nav align-items-center">
             <div class="nav-item navbar-search-wrapper mb-0">
                 <a class="nav-item nav-link search-toggler d-flex align-items-center px-0" href="javascript:void(0);">
                     <i class="ti ti-search ti-md me-2"></i>
                     <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
                 </a>
             </div>
-        </div>
+        </div> --}}
         <!-- /Search -->
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
 
             <!-- Notification -->
-            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
+            {{-- <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="ti ti-bell ti-md"></i>
                     <span class="badge bg-danger rounded-pill badge-notifications">5</span>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </li>
-                            
+
                         </ul>
                     </li>
                     <li class="dropdown-menu-footer border-top">
@@ -61,7 +61,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <!--/ Notification -->
 
             <!-- User -->
@@ -81,8 +81,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
+                                    <span class="fw-semibold d-block">{{Illuminate\Support\Facades\Auth::user()->name}}</span>
+                                    <small class="text-muted">{{Illuminate\Support\Facades\Auth::user()->user_role}}</small>
                                 </div>
                             </div>
                         </a>
@@ -96,7 +96,7 @@
                             <span class="align-middle">My Profile</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>

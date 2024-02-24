@@ -35,14 +35,14 @@
                                 @error('month')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                          
+
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="payment_date">payment_date</label>
                         <div class="col-sm-10">
                             <input type="date" name="payment_date" class="form-control" id="payment_date"
-                                placeholder="payment_date" />
+                                placeholder="payment_date" value="{{ $taday_date }}"/>
                             @error('payment_date')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror

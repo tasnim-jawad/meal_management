@@ -23,7 +23,7 @@
                                 <label for="inputEmailAddress2" class="col-sm-3 col-form-label">quantity</label>
                                 <div class="col-sm-9">
                                     <input type="number" value="{{ $meals->quantity }}" name="quantity"
-                                        class="form-control" id="inputEmailAddress2" placeholder="mobile">
+                                        class="form-control" id="inputEmailAddress2" placeholder="mobile" readonly>
                                 </div>
                             </div>
 

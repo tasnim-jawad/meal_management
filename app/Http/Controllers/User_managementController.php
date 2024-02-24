@@ -24,13 +24,14 @@ class User_managementController extends Controller
             'Telegram' => 'required',
             'email' => 'required|email|unique:users',
             'department' => 'required',
+            'batch_no' => 'required',
             'address' => 'required',
             'password' => 'required|min:8|confirmed', // Add "confirmed" rule for password
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'password.confirmed' => 'Password and Confirm Password do not match',
         ]);
-    
+
         // $validator->setAttributeNames([
         //     'name' => 'Name',
         //     'mobile' => 'Mobile',
@@ -41,11 +42,11 @@ class User_managementController extends Controller
         //     'address' => 'Address',
         //     'password' => 'Password',
         // ]);
-    
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-    
+
         $saveuser = new User();
         $saveuser->name = $request->input('name');
         $saveuser->user_role = 'User';
@@ -54,26 +55,27 @@ class User_managementController extends Controller
         $saveuser->Telegram = $request->input('Telegram');
         $saveuser->email = $request->input('email');
         $saveuser->department = $request->input('department');
+        $saveuser->batch_no = $request->input('batch_no');
         $saveuser->address = $request->input('address');
-    
+
         // Check if password and password_confirmation match before hashing the password
         if ($request->input('password') === $request->input('password_confirmation')) {
             $saveuser->password = Hash::make($request->input('password'));
         } else {
             return back()->with('error', 'Password and Confirm Password do not match');
         }
-    
+
         if ($request->hasFile('image')) {
             $saveuser->image = $this->saveImage($request);
         } else {
             $saveuser->image = 'adminAsset/user-image/default.jpg';
         }
-    
+
         $saveuser->save();
-    
+
         return back()->with('message', 'Info saved successfully');
     }
-    
+
     private function saveImage($request)
     {
         $image = $request->file('image');

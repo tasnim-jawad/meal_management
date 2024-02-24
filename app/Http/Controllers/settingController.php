@@ -18,15 +18,16 @@ class settingController extends Controller
             'shut_down_reason' => 'required|string|max:255',
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
+            'cook_salary' => 'required',
             'meat_set_last_time' => 'required|string|max:255',
             'meal_set_alert_time' => 'required|string|max:255',
             'alert_text_for_all' => 'required|string|max:255',
             'today_meal_coocking_end_time' => 'required|string|max:255',
         ]);
-    
+
         $setting = new Settings();
         $data = "";
-    
+
         if ($request->shut_down_app == 1) {
             $setting->shut_down_app = 1;
             $data = "Data 1";
@@ -34,19 +35,20 @@ class settingController extends Controller
             $setting->shut_down_app = 0;
             $data = "Data 0";
         }
-    
+
         $setting->shut_down_reason = $request->shut_down_reason;
         $setting->contact_name = $request->contact_name;
         $setting->contact_number = $request->contact_number;
+        $setting->cook_salary = $request->cook_salary;
         $setting->meat_set_last_time = $request->meat_set_last_time;
         $setting->meal_set_alert_time = $request->meal_set_alert_time;
         $setting->alert_text_for_all = $request->alert_text_for_all;
         $setting->today_meal_coocking_end_time = $request->today_meal_coocking_end_time;
         $setting->save();
-    
+
         return back()->with('message', 'Info saved successfully')->with('data', $data);
     }
-    
+
 
     public function view()
     {
