@@ -10,14 +10,15 @@
                 <div class="col-md-4 user_plan"></div>
                 <div class="col-md-4 user_status"></div>
             </div>
-            <form action="{{ route('admin.meal.search') }}" method="GET">
+            <form class="mb-3" action="{{ route('admin.meal.search') }}" method="GET">
                 @csrf
                 <label for="selectedDate">Select Date:</label>
                 <input type="date" name="selectedDate" id="selectedDate">
                 <button type="submit" class="btn btn-primary">Filter</button>
                 <a href="{{ route('admin.meal.all_meal') }}" class="btn btn-danger">Reset</a>
             </form>
-            <a href="{{ route('admin.meal.print.download_pdf',['selectedDate' => request('selectedDate')]) }}" class="btn btn-success">Download PDF</a>
+            <a href="{{ route('admin.meal.print.download_pdf',['selectedDate' => request('selectedDate')]) }}" class="btn btn-success me-2">Download PDF</a>
+            <a href="{{ route('admin.meal.print_xlsx.download_xlsx',['selectedDate' => request('selectedDate')]) }}" class="btn btn-success">Download XLSX</a>
         </div>
         <div class="card-datatable table-responsive">
             <table class="datatables-users table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">

@@ -17,7 +17,7 @@ class frontEndBookingController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required',
+            'quantity' => 'required|integer|min:1|max:1',
             'date' => 'required',
         ]);
 

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+
 
 class mealController extends Controller
 {
@@ -45,6 +50,8 @@ class mealController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
+        // dd(Auth::user());
 
         $meal = new UserMeals();
         $meal->user_id = $request->user_id;
@@ -146,6 +153,7 @@ class mealController extends Controller
     // }
 
     public function download_pdf($date = null){
+
         $query  = UserMeals::with('user')
                     ->orderBy('date', 'desc')
                     ->latest();
@@ -159,9 +167,75 @@ class mealController extends Controller
                             ->latest();
         }
         // dd($meals);
-        $meals = $query->get()->toArray();
 
+        $meals = $query->get()->toArray();
         $pdf = Pdf::loadView('admin.meal.meal_pdf',compact('meals'));
         return $pdf->download('all_meal.pdf');
+
+    }
+
+    public function download_xlsx($date = null){
+        $query  = UserMeals::with('user')->orderBy('date', 'desc')->latest();
+
+        if($date){
+            $query = UserMeals::whereDate('date', $date)->with('user')->orderBy('date', 'desc')->latest();
+        }
+
+
+        $meals = $query->get()->toArray();
+        // $dataArray = [];
+        // All_meal_list_load.xlsx
+
+
+        $reader = IOFactory::createReader('Xlsx');
+        $spreadsheet = $reader->load('All_meal_list_load.xlsx');
+
+        $spreadsheet->getActiveSheet()->setCellValue('A1', 'All meal list')
+                                    ->getStyle('A1')
+                                    ->getAlignment()
+                                    ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A2' , '#srl')
+                            ->setCellValue('B2' , 'name')
+                            ->setCellValue('C2' , 'mobile')
+                            ->setCellValue('D2' , 'quantity')
+                            ->setCellValue('E2' , 'date');
+
+        $contentStartRow =3;
+        $currentContentRow =3;
+        // dd(gettype($meals));
+        foreach ($meals as $key=>$meal) {
+            // $dataArray[] = [
+            //     'srl' => $key+1,
+            //     'userName' => $meal['user']['name'],
+            //     'userNumber' => $meal['user']['mobile'],
+            //     'quantity' => $meal['quantity'],
+            //     'mealDate' => $meal['date'],
+            // ];
+            // dd($meal['user']['name']);
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($currentContentRow + 1, 1);
+            $spreadsheet->getActiveSheet()
+                            ->setCellValue('A'.$currentContentRow , $key + 1)
+                            ->setCellValue('B'.$currentContentRow , $meal['user']['name'])
+                            ->setCellValue('C'.$currentContentRow , $meal['user']['mobile'],)
+                            ->setCellValue('D'.$currentContentRow , $meal['quantity'])
+                            ->setCellValue('E'.$currentContentRow , $meal['date']);
+            $currentContentRow++;
+        }
+        foreach (range('A', 'E') as $column) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $spreadsheet->getActiveSheet()->mergeCells('A1:E1');
+
+
+        // $spreadsheet->getActiveSheet()->fromArray($dataArray, null, 'A1');
+        // $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="All_meal_list.xlsx"');
+        // header('Cache-Control: max-age=0');
+        $writer = IOFactory::createWriter($spreadsheet,'Xlsx');
+        $writer->save('php://output');
+
     }
 }

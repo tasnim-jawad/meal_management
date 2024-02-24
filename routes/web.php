@@ -110,6 +110,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
         Route::get('/delete/{id}', [mealController::class, 'delete'])->name('admin.meal.delete');
         Route::get('/search', [mealController::class, 'search'])->name('admin.meal.search');
         Route::get('/print/{selectedDate?}', [mealController::class, 'download_pdf'])->name('admin.meal.print.download_pdf');
+        Route::get('/print_xlsx/{selectedDate?}', [mealController::class, 'download_xlsx'])->name('admin.meal.print_xlsx.download_xlsx');
 
     });
 

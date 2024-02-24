@@ -27,7 +27,7 @@
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
                                     <input type="number" name="quantity" id="quantity" class="form-control"
-                                        placeholder="quantity" value="1" readonly/>
+                                        placeholder="quantity" value="1" />
                                 </div>
                                 @error('quantity')
                                     <span class="text-danger">{{ $message }}</span>
