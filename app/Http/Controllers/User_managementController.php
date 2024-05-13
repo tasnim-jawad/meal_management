@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Batch;
 use App\Models\User;
 use App\Models\Department;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class User_managementController extends Controller
 {
     public function add_user()
     {
-        return view('admin.user_management.add_user');
+        $departments = Department::get()->all();
+        return view('admin.user_management.add_user',compact('departments'));
     }
     public function store(Request $request)
     {

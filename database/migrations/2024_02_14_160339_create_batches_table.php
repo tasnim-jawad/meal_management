@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('department_id')->nullable();
+            $table->string('batch_name')->nullable();
+            $table->bigInteger('creator')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
             $table->timestamps();
         });
     }

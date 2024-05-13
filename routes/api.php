@@ -27,13 +27,13 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->group(function (){
 // return $request->user();
 
-Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard.home');
-Route::get('/add_user', [User_managementController::class, 'add_user'])->name('admin.user_management.add_user');
-Route::post('/store', [User_managementController::class, 'store'])->name('admin.user_management.store');
-Route::get('/all_user', [User_managementController::class, 'all_user'])->name('admin.user_management.all_user');
-Route::get('/edit/{id}', [User_managementController::class, 'edit'])->name('admin.user_management.edit');
-Route::post('/update/{id}', [User_managementController::class, 'update'])->name('admin.user_management.update');
-Route::get('/delete/{id}', [User_managementController::class, 'delete'])->name('admin.user_management.delete');
+// Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard.home');
+// Route::get('/add_user', [User_managementController::class, 'add_user'])->name('admin.user_management.add_user');
+// Route::post('/store', [User_managementController::class, 'store'])->name('admin.user_management.store');
+// Route::get('/all_user', [User_managementController::class, 'all_user'])->name('admin.user_management.all_user');
+// Route::get('/edit/{id}', [User_managementController::class, 'edit'])->name('admin.user_management.edit');
+// Route::post('/update/{id}', [User_managementController::class, 'update'])->name('admin.user_management.update');
+// Route::get('/delete/{id}', [User_managementController::class, 'delete'])->name('admin.user_management.delete');
 // });
 
 Route::get('/test', function () {
@@ -67,26 +67,26 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/update/{id}', [UsermanageController::class, 'update']);
         Route::get('/delete/{id}', [UsermanageController::class, 'delete']);
     });
- 
+
     Route::prefix('meal_rate')->group(function () {
         Route::get('/all_meal_rate', [mealRateController::class, 'all_meal_rate']);
         Route::get('/find/{id}', [mealRateController::class, 'find']);
         Route::post('/update/{id}', [mealRateController::class, 'update']);
         Route::get('/delete/{id}', [mealRateController::class, 'delete']);
     });
-      
+
     Route::prefix('daily_expense')->group(function () {
         Route::get('/all_expense', [dailyExpenseController::class, 'all_expense']);
         Route::get('/find/{id}', [dailyExpenseController::class, 'find']);
         Route::post('/update/{id}', [dailyExpenseController::class, 'update']);
         Route::get('/delete/{id}', [dailyExpenseController::class, 'delete']);
     });
-    
+
     Route::prefix('user')->group(function () {
         Route::get('/all_user', [allUserController::class, 'all_user']);
-        
+
     });
-    
+
     Route::prefix('info')->group(function () {
         Route::get('/all_info', [userInfoController::class, 'all_info']);
     });
@@ -94,7 +94,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('meal_booking')->group(function () {
         Route::get('/all_meal', [mealBookingController::class, 'all_meal']);
         Route::post('/store', [mealBookingController::class, 'store']);
-     
+
     });
 
 });

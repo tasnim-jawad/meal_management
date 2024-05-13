@@ -16,7 +16,7 @@
                 @csrf
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Basic Layout</h5> <small class="text-muted float-end">Default label</small>
+                        <h5 class="mb-0">Create User</h5> <small class="text-muted float-end">Default label</small>
                     </div>
                     <div class="card-body">
                         <div class="row mb-3">
@@ -69,8 +69,8 @@
                             <div class="col-sm-10">
                                 <select class="form-select meal_user" name="department" >
                                     <option selected disabled>Open this select menu</option>
-                                    @foreach (App\Models\Department::get() as $depart)
-                                        <option value="{{ $depart->id }}">{{ $depart->department }}</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->department }}</option>
                                     @endforeach
                                 </select>
                                 @error('department')

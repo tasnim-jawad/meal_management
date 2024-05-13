@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\mealBookingController;
 use App\Http\Controllers\Api\mealController;
 use App\Http\Controllers\Api\mealRateController;
 use App\Http\Controllers\Api\userInfoController;
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\detailsController;
 use App\Http\Controllers\frontEndBookingController;
 use App\Http\Controllers\frontEndController;
@@ -36,10 +37,10 @@ use Carbon\Carbon;
 Route::get('/', [frontEndController::class, 'index'])->name('/');
 Route::get('/Meal_Booking', [frontEndController::class, 'Meal_Booking'])->name('frontEnd.Meal_Booking.Meal_Booking')->middleware(['isuser']);
 
-Route::prefix('register')->group(function(){
-    Route::get('/register',[registerController::class,'register'])->name('frontEnd.register.register');
-    Route::post('/store', [registerController::class, 'store'])->name('frontEnd.register.store');
-});
+// Route::prefix('register')->group(function(){
+//     Route::get('/register',[registerController::class,'register'])->name('frontEnd.register.register');
+//     Route::post('/store', [registerController::class, 'store'])->name('frontEnd.register.store');
+// });
 
 Route::prefix ('')->group(function(){
     Route::get('login', [logincontroller::class, 'login'])->name('login');
@@ -93,34 +94,58 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     //     return view('dashboard');
     // })->name('dashboard');->middleware('isadmin')
     //
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard.home')->middleware('isadmin');
-    Route::get('/add_user', [User_managementController::class, 'add_user'])->name('admin.user_management.add_user');
-    Route::post('/store', [User_managementController::class, 'store'])->name('admin.user_management.store');
-    Route::get('/all_user', [User_managementController::class, 'all_user'])->name('admin.user_management.all_user');
-    Route::get('/edit/{id}', [User_managementController::class, 'edit'])->name('admin.user_management.edit');
-    Route::post('/update/{id}', [User_managementController::class, 'update'])->name('admin.user_management.update');
-    Route::get('/delete/{id}', [User_managementController::class, 'delete'])->name('admin.user_management.delete');
+    Route::middleware(['isadmin'])->group(function () {
 
-    Route::prefix('meal')->group(function () {
-        Route::get('/add_meal', [mealController::class, 'add_meal'])->name('admin.meal.add_meal');
-        Route::post('/store', [mealController::class, 'store'])->name('admin.meal.store');
-        Route::get('/all_meal', [mealController::class, 'all_meal'])->name('admin.meal.all_meal');
-        Route::get('/find/{id}', [mealController::class, 'find'])->name('admin.meal.edit');
-        Route::post('/update/{id}', [mealController::class, 'update'])->name('admin.meal.update');
-        Route::get('/delete/{id}', [mealController::class, 'delete'])->name('admin.meal.delete');
-        Route::get('/search', [mealController::class, 'search'])->name('admin.meal.search');
-        Route::get('/print/{selectedDate?}', [mealController::class, 'download_pdf'])->name('admin.meal.print.download_pdf');
-        Route::get('/print_xlsx/{selectedDate?}', [mealController::class, 'download_xlsx'])->name('admin.meal.print_xlsx.download_xlsx');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard.home');
+        Route::get('/add_user', [User_managementController::class, 'add_user'])->name('admin.user_management.add_user');
+        Route::post('/store', [User_managementController::class, 'store'])->name('admin.user_management.store');
+        Route::get('/all_user', [User_managementController::class, 'all_user'])->name('admin.user_management.all_user');
+        Route::get('/edit/{id}', [User_managementController::class, 'edit'])->name('admin.user_management.edit');
+        Route::post('/update/{id}', [User_managementController::class, 'update'])->name('admin.user_management.update');
+        Route::get('/delete/{id}', [User_managementController::class, 'delete'])->name('admin.user_management.delete');
 
+
+        Route::prefix('meal')->group(function () {
+            Route::get('/add_meal', [mealController::class, 'add_meal'])->name('admin.meal.add_meal');
+            Route::post('/store', [mealController::class, 'store'])->name('admin.meal.store');
+            Route::get('/all_meal', [mealController::class, 'all_meal'])->name('admin.meal.all_meal');
+            Route::get('/find/{id}', [mealController::class, 'find'])->name('admin.meal.edit');
+            Route::post('/update/{id}', [mealController::class, 'update'])->name('admin.meal.update');
+            Route::get('/delete/{id}', [mealController::class, 'delete'])->name('admin.meal.delete');
+            Route::get('/search', [mealController::class, 'search'])->name('admin.meal.search');
+            Route::get('/print/{selectedDate?}', [mealController::class, 'download_pdf'])->name('admin.meal.print.download_pdf');
+            Route::get('/print_xlsx/{selectedDate?}', [mealController::class, 'download_xlsx'])->name('admin.meal.print_xlsx.download_xlsx');
+        });
+
+        Route::prefix('user')->group(function () {
+            Route::get('/all_user', [allUserController::class, 'all_user'])->name('admin.user.all_user');
+            Route::get('/search', [allUserController::class, 'searchUsers'])->name('admin.user.search');
+            Route::get('/delete/{id}', [allUserController::class, 'delete'])->name('admin.user.delete');
+            Route::get('/details/{id}', [allUserController::class, 'details'])->name('admin.user.details');
+        });
+
+        Route::group(['prefix' => 'batch'] , function(){
+            Route::get('/edit/{id}', [BatchController::class,'edit'])->name('batch.edit');
+            Route::get('/create', [BatchController::class,'create'])->name('batch.create');
+
+            Route::get('/all', [BatchController::class,'all'])->name('batch.all');
+            Route::get('/show/{id}', [BatchController::class,'show'])->name('batch.show');
+            Route::post('/store', [BatchController::class,'store'])->name('batch.store');
+            Route::post('/update', [BatchController::class,'update'])->name('batch.update');
+            Route::post('/soft_delete', [BatchController::class,'soft_delete'])->name('batch.soft_delete');
+            Route::post('/destroy', [BatchController::class,'destroy'])->name('batch.destroy');
+            Route::post('/restore', [BatchController::class,'restore'])->name('batch.restore');
+        });
     });
 
-    Route::prefix('meal_register')->group(function () {
-        Route::get('/Add_user_meal', [mealRegistercontroller::class, 'Add_user_meal'])->name('admin.meal_register.Add_user_meal');
-        Route::post('/store', [mealRegistercontroller::class, 'store'])->name('admin.meal_register.store');
-        Route::get('/all_user_meal', [mealRegistercontroller::class, 'all_user_meal'])->name('admin.meal_register.all_user_meal');
-        Route::get('//delete/{id}', [mealRegistercontroller::class, 'delete'])->name('admin.meal_register.delete');
 
-    });
+    // Route::prefix('meal_register')->group(function () {
+    //     Route::get('/Add_user_meal', [mealRegistercontroller::class, 'Add_user_meal'])->name('admin.meal_register.Add_user_meal');
+    //     Route::post('/store', [mealRegistercontroller::class, 'store'])->name('admin.meal_register.store');
+    //     Route::get('/all_user_meal', [mealRegistercontroller::class, 'all_user_meal'])->name('admin.meal_register.all_user_meal');
+    //     Route::get('/delete/{id}', [mealRegistercontroller::class, 'delete'])->name('admin.meal_register.delete');
+
+    // });
 
     Route::prefix('meal_rate')->group(function () {
         Route::get('/add_meal_rate', [mealRateController::class, 'add_meal_rate'])->name('admin.meal_rate.add_meal_rate');
@@ -143,14 +168,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     });
 
 
-    Route::prefix('user')->group(function () {
-        Route::get('/all_user', [allUserController::class, 'all_user'])->name('admin.user.all_user');
-        Route::get('/search', [allUserController::class, 'searchUsers'])->name('admin.user.search');
-        Route::get('/delete/{id}', [allUserController::class, 'delete'])->name('admin.user.delete');
-        Route::get('/details/{id}', [allUserController::class, 'details'])->name('admin.user.details');
 
-
-    });
 
 
     Route::prefix('info')->group(function () {

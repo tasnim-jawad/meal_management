@@ -16,7 +16,7 @@ class MonthlyMealRateSeeder extends Seeder
     {
         MonthlyMealRates::truncate();
 
-       
+
 
         MonthlyMealRates::create([
             'month' => Carbon::parse('2023-09-01')->format('Y-m-d'), // First day of September 2023
@@ -44,14 +44,14 @@ class MonthlyMealRateSeeder extends Seeder
 
         // for ($i = 1; $i <= 1; $i++) {
         //     $mealRate = new MonthlyMealRates;
-        //     $mealRate->month = '2023-09-01'; 
+        //     $mealRate->month = '2023-09-01';
         //     $mealRate->meal_rate = 50.30;
-        //     $mealRate->is_visible = true; 
+        //     $mealRate->is_visible = true;
         //     $mealRate->month_start_date = '2023-09-10';
         //     $mealRate->month_end_date = '2023-09-30';
         //     $mealRate->save();
         // }
-        
-        
+
+
     }
 }

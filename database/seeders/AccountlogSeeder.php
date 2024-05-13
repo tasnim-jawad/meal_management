@@ -39,7 +39,7 @@ class AccountlogSeeder extends Seeder
             'income_date' => Carbon::createFromFormat('n-d-Y', '9-19-2023')->format('Y-m-d'),
             // 'category' => '',
         ]);
-        
+
         AccountLogs::create([
             'amount' => 200,
             'is_expense' => 0,

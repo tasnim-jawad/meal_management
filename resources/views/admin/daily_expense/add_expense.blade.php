@@ -1,4 +1,14 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        .error_field{
+            border-color: red !important;
+            background-color: rgba(255, 0, 0, 0.1) !important;
+        }
+
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
         <!-- Basic Layout -->
@@ -15,7 +25,7 @@
                         <div id="date_row" class="row mb-3 align-items-center">
                             <div class="col-md-6  d-flex align-items-center justify-content-center">
                                 <label class="form-label" for="bajar_date" style="width: 30%">Bajar Date</label>
-                                <input type="date" name="bajar_date" class="form-control" placeholder="Bajar Date" />
+                                <input type="date" name="bajar_date" class="form-control" id="bajar_date" placeholder="Bajar Date" />
                             </div>
                             <div class="col-md-6 text-end">
                                 <div class="badge  bg-label-success rounded" onclick="add_row()">
@@ -47,19 +57,24 @@
         let i = 0;
         function add_row(){
             // console.log("some");
+            let empty_form = document.querySelector(".error_block")
+            if (empty_form) {
+                empty_form.remove()
+            }
+
             let bajar_body =$('#bajar_body');
             // console.log("bajar_body");
             bajar_body.append(
                 `
                 <div class="row mb-2 row_no_${add_id}" data-id='${i}'>
-                    <div class="col-4" data-field='title' >
+                    <div class="col-3" data-field='title' >
                         <input type="text" name="bajar[${i}][title]" class="form-control title" placeholder="Title" />
                     </div>
-                    <div class="col-1" data-field='quantity'>
+                    <div class="col-2" data-field='quantity'>
                         <input type="text" name="bajar[${i}][quantity]"  class="quantity form-control" placeholder="qty" />
                     </div>
                     <div class="col-2" data-field='unit'>
-                            <select class="form-select select2 unit_select unit" name="bajar[${i}][unit]" >
+                            <select class="form-select select2 unit_select unit " name="bajar[${i}][unit]" >
                                 <option value="" selected>Select a unit</option>
                                 <option value="kg">KG</option>
                                 <option value="pcs">PCS</option>
@@ -84,7 +99,7 @@
             add_id++
             i++
 
-
+            //******* start calculate total based on price and quantity *******
             const priceInputs = document.querySelectorAll('.price');
             const quantityInputs = document.querySelectorAll('.quantity');
             const totalInputs = document.querySelectorAll('.total');
@@ -102,8 +117,8 @@
                 const quantity = parseFloat(quantityInputs[index].value) || 0;
                 const total = price * quantity;
                 totalInputs[index].value = total;
-                // console.log(total);
             }
+            //******* end calculate total based on price and quantity *******
 
     }
     function delete_row(className) {
@@ -118,10 +133,8 @@
 
     function expense_add(event) {
         event.preventDefault();
-        console.log("expense_add clicked");
 
         let formData = new FormData(event.target);
-        // console.log('formData:',formData);
         let isResponse = false;
         fetch('/daily_expense/store',{
                 method: 'POST',
@@ -129,16 +142,26 @@
             })
             .then(res => res.json())
             .then(data => {
-                // console.log('formData in to the data:', formData);
-                console.log("nothing in data");
-                console.log('responce data: ',data);
                 if(data){
-                    let all_error = document.querySelectorAll(".error_block")
-                    all_error.forEach(errorBlock => {
-                        errorBlock.remove();
+                    // for removing add(+) error message
+                    let empty_form = document.querySelector(".error_block")
+                    if (empty_form) {
+                        empty_form.remove()
+                    }
+                    // for removing select field error style
+                    let select_spans = document.querySelectorAll('.dark-style .select2-container--default .select2-selection');
+                    select_spans.forEach(function(select_span) {
+                        if (select_span.classList.contains('error_field')) {
+                            select_span.classList.remove('error_field');
+                        }
                     });
+                    // for removing other field error style
+                    let all_errors = document.querySelectorAll(".error_field")
+                    all_errors.forEach(errorField => {
+                        errorField.classList.remove('error_field');
+                    });
+
                     if (!data.data) {
-                        console.log(data.message);
                         let date_row =document.getElementById('date_row');
                         let div =document.createElement('div');
                         div.style.color = 'red';
@@ -146,50 +169,37 @@
                         div.innerHTML = `<P>${data.message}</P>`;
                         div.querySelector('p').style.margin = '0';
                         date_row.appendChild(div)
+
                     } else if(data.data.bajar_date != null){
-                        // console.log(data.data.bajar);
-                        // console.log(Object.keys(data.data.bajar).length);
                         error =data.data.bajar;
                         error_row_key = Object.keys(data.data.bajar);
-                        // error_row_length = Object.keys(data.data.bajar).length;
-                        // error_row_last_index = Object.keys(data.data.bajar)[error_row_length-1];
-                        console.log(error_row_key);
 
                         error_row_key.forEach( function(value) {
-                            console.log(value);
                             let error_row = document.querySelector(`[data-id='${value}']`)
-                            // console.log(error_row);
-                            // console.log(error[value]);
+
                             error[value].forEach(function(item) {
-                                console.log(item.field);
-                                error_block = document.createElement('div')
-                                error_block.setAttribute('class','error_block col')
-                                error_block.style.color = 'red';
-                                error_block.innerHTML = `<P>${item.field} field is empty.</P>`;
-                                error_block.querySelector('p').style.margin = '0';
-                                error_row.appendChild(error_block)
+                                let empty_field = error_row.querySelector(`.${item.field}`);
+
+                                if (empty_field && empty_field.tagName.toLowerCase() === 'select') {
+                                    let select_field_span = error_row.querySelector('.dark-style .select2-container--default .select2-selection');
+                                    select_field_span.classList.add('error_field');
+                                } else {
+                                    empty_field.classList.add('error_field');
+                                }
                             })
                         })
-                        // for(let i = 0; i <= error_row_last_index ; i++){
-                        //     // console.log(i);
-                        //     if()
-                        // }
+
 
                     }else{
-                        console.log("date is null");
-                        let date_row =document.getElementById('date_row');
-                        error_block = document.createElement('div')
-                        error_block.setAttribute('class','error_block')
-                        error_block.style.color = 'red';
-                        error_block.innerHTML = `<P>Bajar date is empty. you have to set bajar date first</P>`;
-                        error_block.querySelector('p').style.margin = '0';
-                        date_row.appendChild(error_block)
+                        let date_row =document.getElementById('bajar_date');
+                        date_row.classList.add('error_field');
                     }
                 }
                 isResponse = true;
             })
             .finally(() => {
                 // Execute this code only if the .then block was not executed
+                // for remove bajar body after submit bajar list
                 if (!isResponse) {
                     $('#bajar_body').remove();
                 }
@@ -198,17 +208,6 @@
 
 
     }
-
-
-    // function expense_add(event) {
-    //     let formData = new FormData(expense_add_form);
-    //     console.log(formData);
-    //     $.post("/daily_expense/store", function(data, status){
-    //         alert("Data: " + data + "\nStatus: " + status);
-    //     });
-    // }
-
-
 
 
     </script>

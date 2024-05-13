@@ -141,11 +141,10 @@
     </li>
 
           {{-- Meal Register --}}
-    <li class="menu-item">
+    {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">Meal Register</div>
-            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -159,7 +158,7 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> --}}
 
            {{-- Add payment --}}
 
@@ -182,7 +181,27 @@
                 </li>
             </ul>
         </li>
+        {{-- Meal rate --}}
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                <div data-i18n="Users">Batch</div>
+                {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('batch.create') }}" class="menu-link">
+                        <div data-i18n="create user">Add Batch</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('batch.all') }}" class="menu-link">
+                        <div data-i18n="show user">All Batch</div>
+                    </a>
+                </li>
 
+            </ul>
+        </li>
         {{-- Admin Setting --}}
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">

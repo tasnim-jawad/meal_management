@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_meals', function (Blueprint $table) {
             $table->id();
             $table->text('user_id')->nullable();
-            $table->integer('quantity')->nullable()->default(1);
+            $table->integer('quantity')->nullable()->default(1)->unsigned();
             $table->date('date')->nullable();
             $table->text('meal_rate_id')->nullable();
             $table->tinyInteger('status')->default(1);

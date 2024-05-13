@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     use HasFactory;
+
+    public function batch()
+    {
+        return $this->hasMany(Batch::class);
+    }
 }
