@@ -14,7 +14,7 @@
                                     <input type="text" value="{{  $saveuser->name }}" name="name" class="form-control" id="inputEnterYourName" placeholder="Enter Your Name">
                                 </div>
                             </div>
-                            
+
                             {{-- <div class="row mb-3">
                                 <label for="inputEmailAddress2" class="col-sm-3 col-form-label">User Role</label>
                                 <div class="col-sm-9">
@@ -45,14 +45,14 @@
                                     <input type="mobile" value="{{$saveuser->Telegram}}" name="Telegram" class="form-control" id="inputEmailAddress2" placeholder="mobile">
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-3">
                                 <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
                                     <input type="email" value="{{$saveuser->email}}" name="email" class="form-control" id="inputEmailAddress2" placeholder="Email Address">
                                 </div>
                             </div>
-                        
+
                             {{-- <div class="row mb-3">
                                 <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Department</label>
                                 <div class="col-sm-9">
@@ -60,41 +60,51 @@
                                 </div>
                             </div> --}}
                             <div class="row mb-3">
-                                <label for="inputDepartment" class="col-sm-3 col-form-label">Department</label>
+                                <label for="department" class="col-sm-3 col-form-label">Department</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" name="department" id="inputDepartment" aria-label="Select Department">
-                                        <option selected>Open this select menu</option>
+                                    <select class="form-select meal_user" name="department" id="department" onchange="batchSelect()" aria-label="Select Department">
+                                        <option selected disabled> ------ select department ------ </option>
                                         @foreach ($departments as $depart)
-                                            <option value="{{ $depart->id }}" @if ($depart->department == $saveuser->department) selected @endif>
+                                            <option value="{{ $depart->depart_id }}" @if ($depart->department == $saveuser->department) selected @endif>
                                                 {{ $depart->department }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            
-                            
-
                             <div class="row mb-3">
-                                <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Address</label>
+                                <label class="col-sm-3 col-form-label" for="batch_id">Batch</label>
                                 <div class="col-sm-9">
-                                    <input type="text" value="{{$saveuser->address}}" name="address" class="form-control" id="inputEmailAddress2" placeholder="Address">
+                                    <select class="form-select meal_user" name="batch_id" id="batch_id" >
+                                        <option selected disabled>---- select Department -----</option>
+                                    </select>
+                                    @error('department')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
+
                             <div class="row mb-3">
-                                <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Password</label>
+                                <label for="address" class="col-sm-3 col-form-label">Address</label>
                                 <div class="col-sm-9">
-                                    <input type="password" value="{{$saveuser->password}}" name="password" class="form-control" id="inputEmailAddress2" placeholder="password">
+                                    <input type="text" value="{{$saveuser->address}}" name="address" class="form-control" id="address" placeholder="Address">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="password" class="col-sm-3 col-form-label">Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" value="" name="password" class="form-control" id="password" placeholder="password">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputEmailAddress2" class="col-sm-3 col-form-label">confirm Password</label>
+                                <label for="password_confirmation" class="col-sm-3 col-form-label">confirm Password</label>
                                 <div class="col-sm-9">
-                                    <input type="password" value="{{$saveuser->password_confirmation}}" name="password_confirmation" class="form-control" id="inputEmailAddress2" placeholder="password">
+                                    <input type="password" value="" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="password">
                                 </div>
                             </div>
-                          
+
                             <div class="row mb-3">
                                 <label for="inputAddress4" class="col-sm-3 col-form-label">image</label>
                                 <div class="col-sm-9">
@@ -113,8 +123,38 @@
                 </div>
             </form>
     </div>
-    </div>
-    </div>
 
-   
 @endsection
+
+@push('end_js')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            // This code will execute after the DOM is fully loaded
+            batchSelect();
+        });
+        function batchSelect() {
+            console.log('department selected');
+            let department_id = document.getElementById('department').value;
+            axios.get(`http://127.0.0.1:8000/batch/department-wise/${department_id}`)
+                .then(response => {
+                    if(response.data.status == "success"){
+                        let batchSelect = document.getElementById('batch_id');
+                        batchSelect.innerHTML = "<option selected disabled>---- Select Batch -----</option>";
+                        response.data.data.forEach(batch => {
+                            let option = document.createElement('option');
+                            option.value = batch.id;
+                            option.text = batch.batch_name;
+                            if (batch.id == {{ $saveuser->batch_id }}) {
+                                option.selected = true;
+                            }
+                            batchSelect.appendChild(option);
+                        })
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+@endpush

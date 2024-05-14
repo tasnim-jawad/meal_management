@@ -18,9 +18,9 @@ class adminMiddleware
     {
         {
             // return $next($request);
-    
+
             if (Auth::check()) {
-                if (Auth::user()->user_role == 'Admin' ) {
+                if (Auth::user()->role_id == 1 ) {
                     return $next($request);
                 } else {
                     return redirect('/');
@@ -29,6 +29,6 @@ class adminMiddleware
                 return redirect()->route('login');
             }
         }
-    
+
     }
 }

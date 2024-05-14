@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Rakib',
-            'user_role' => 'User',
+            'role_id' => 4,
             'image' => 'adminAsset/user-image/1835849912.png',
             'email' => 'Rakib@gmail.com',
             'password' => Hash::make('12345678'),
@@ -26,14 +26,14 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01874324205',
             'Telegram' => '01874324205',
             'department' => 'IT',
-            'batch_no' => '11',
+            'batch_id' => 1,
             'address' => 'Mirpur,Dhaka',
 
         ]);
 
         User::create([
             'name' => 'sakib',
-            'user_role' => 'User',
+            'role_id' => 4,
             'image' => 'adminAsset/user-image/1835849912.png',
             'email' => 'sakib@gmail.com',
             'password' => Hash::make('12345678'),
@@ -41,13 +41,13 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01874324201',
             'Telegram' => '01874324201',
             'department' => 'IELTS',
-            'batch_no' => '22',
+            'batch_id' => 2,
             'address' => 'Mirpur,Dhaka',
         ]);
 
         User::create([
             'name' => 'Aakib',
-            'user_role' => 'User',
+            'role_id' => 4,
             'image' => 'adminAsset/user-image/1835849912.png',
             'email' => 'Aakib@gmail.com',
             'password' => Hash::make('12345678'),
@@ -55,13 +55,13 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01874322546',
             'Telegram' => '01874322546',
             'department' => 'Spoken',
-            'batch_no' => '33',
+            'batch_id' => 3,
             'address' => 'Mirpur,Dhaka',
         ]);
 
         User::create([
             'name' => 'Mahabub',
-            'user_role' => 'Admin',
+            'role_id' => 1,
             'image' => 'adminAsset/user-image/1835849912.png',
             'email' => 'test@gmail.com',
             'password' => Hash::make('12345678'),
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             'Whatsapp' => '01992799003',
             'Telegram' => '01992799003',
             'department' => 'IT',
-            'batch_no' => '44',
+            'batch_id' => 4,
             'address' => 'Mirpur,Dhaka',
         ]);
     }

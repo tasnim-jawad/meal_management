@@ -26,11 +26,11 @@ class DepartmentSeeder extends Seeder
         ]);
         Department::create([
             'depart_id' => '3',
-            'department' => 'Spoken',
+            'department' => 'SPOKEN',
         ]);
         Department::create([
             'depart_id' => '4',
-            'department' => 'Employee',
+            'department' => 'EMPLOYEE',
         ]);
     }
 }

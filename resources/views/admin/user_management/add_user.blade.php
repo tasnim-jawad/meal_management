@@ -40,17 +40,17 @@
                                 @enderror
                             </div>
                         </div>
-                        {{-- <div class="row mb-3">
+                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="role">User Role</label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="user_role" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    @foreach (App\Models\UserRole::get() as $quize)
-                                        <option value="{{ $quize->id }}">{{ $quize->user_role }}</option>
+                                <select class="form-select meal_user" name="role_id" aria-label="Default select example">
+                                    <option selected disabled>---- select role ----</option>
+                                    @foreach ($user_role as $role)
+                                        <option value="{{ $role->serial }}">{{ $role->user_role }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="Serial">Phone</label>
                             <div class="col-sm-10">
@@ -65,12 +65,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="role">Department</label>
+                            <label class="col-sm-2 col-form-label" for="department">Department</label>
                             <div class="col-sm-10">
-                                <select class="form-select meal_user" name="department" >
-                                    <option selected disabled>Open this select menu</option>
+                                <select class="form-select meal_user" onchange="batchSelect()" name="department" id="department">
+                                    <option selected disabled>---- select Department -----</option>
                                     @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->department }}</option>
+                                        <option value="{{ $department->depart_id }}">{{ $department->department }}</option>
                                     @endforeach
                                 </select>
                                 @error('department')
@@ -79,11 +79,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="role">Batch Number</label>
+                            <label class="col-sm-2 col-form-label" for="batch_id">Batch</label>
                             <div class="col-sm-10">
-                                <input type="text" name="batch_no" id="batch_no" class="form-control" placeholder="enter batch number" />
-
-                                @error('batch_no')
+                                <select class="form-select meal_user" name="batch_id" id="batch_id" >
+                                    <option selected disabled>---- select Department -----</option>
+                                </select>
+                                @error('department')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -141,19 +142,19 @@
                             <div class="col-sm-10">
                                 <input type="password" name="password" class="form-control" id="password"
                                     placeholder="password" />
-                                    @error('password')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                             </div>
+                            @error('password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="password">confirm Password</label>
                             <div class="col-sm-10">
-                                <input type="password" name="password_confirmation" class="form-control" id="password"
-                                    placeholder="password" />
+                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
+                                    placeholder="password confirmation" />
                             </div>
                             @error('password_confirmation')
-                            <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -169,7 +170,27 @@
     @endsection
 
     @push('end_js')
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-            // $('.meal_user').select2();
+            function batchSelect() {
+                console.log('department selected');
+                let department_id = document.getElementById('department').value;
+                axios.get(`http://127.0.0.1:8000/batch/department-wise/${department_id}`)
+                    .then(response => {
+                        if(response.data.status == "success"){
+                            let batchSelect = document.getElementById('batch_id');
+                            batchSelect.innerHTML = "<option selected disabled>---- Select Batch -----</option>";
+                            response.data.data.forEach(batch => {
+                                let option = document.createElement('option');
+                                option.value = batch.id;
+                                option.text = batch.batch_name;
+                                batchSelect.appendChild(option);
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
         </script>
     @endpush

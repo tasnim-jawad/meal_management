@@ -121,12 +121,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::get('/all_user', [allUserController::class, 'all_user'])->name('admin.user.all_user');
             Route::get('/search', [allUserController::class, 'searchUsers'])->name('admin.user.search');
             Route::get('/delete/{id}', [allUserController::class, 'delete'])->name('admin.user.delete');
-            Route::get('/details/{id}', [allUserController::class, 'details'])->name('admin.user.details');
+            Route::get('/details/{department_id}', [allUserController::class, 'details'])->name('admin.user.details');
         });
 
         Route::group(['prefix' => 'batch'] , function(){
             Route::get('/edit/{id}', [BatchController::class,'edit'])->name('batch.edit');
             Route::get('/create', [BatchController::class,'create'])->name('batch.create');
+            Route::get('/department-wise/{id}', [BatchController::class,'department_wise'])->name('batch.department_wise');
 
             Route::get('/all', [BatchController::class,'all'])->name('batch.all');
             Route::get('/show/{id}', [BatchController::class,'show'])->name('batch.show');

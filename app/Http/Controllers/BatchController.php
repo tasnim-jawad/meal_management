@@ -40,6 +40,14 @@ class BatchController extends Controller
         return view('admin.batch.index',compact('datas'));
     }
 
+    public function department_wise($department_id){
+        $batches = Batch::where('department_id',$department_id)->get()->all();
+        return response([
+            'status' => 'success',
+            'data' => $batches
+        ],200);
+    }
+
     public function show($id)
     {
 
