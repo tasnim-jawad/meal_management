@@ -6,11 +6,12 @@
             <div data-i18n="Dashboards">Dashboard</div>
         </a>
     </li>
+
+    {{-- User Management --}}
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">User Management</div>
-            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -26,9 +27,7 @@
         </ul>
     </li>
 
-
-                {{-- user meal --}}
-
+    {{-- user meal --}}
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
@@ -49,12 +48,12 @@
 
         </ul>
     </li>
-       {{-- Meal rate --}}
+
+    {{-- Meal rate --}}
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
-            <div data-i18n="Users">meal_rate</div>
-            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
+            <div data-i18n="Users">Meal rate</div>
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -92,8 +91,22 @@
             </li>
         </ul>
     </li>
+    {{-- All expense --}}
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+            <div data-i18n="Users">Monthly Report</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('admin.report.index') }}" class="menu-link">
+                    <div data-i18n="show user">Report</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 
-    {{-- All User --}}
+    {{-- All User Due --}}
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
@@ -108,21 +121,6 @@
             </li>
         </ul>
     </li>
-                {{-- All info --}}
-    {{-- <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-            <div data-i18n="Users">info</div>
-            <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
-        </a>
-        <ul class="menu-sub">
-            <li class="menu-item">
-                <a href="{{ route('admin.info.all_info') }}" class="menu-link">
-                    <div data-i18n="show user">All Info</div>
-                </a>
-            </li>
-        </ul>
-    </li> --}}
 
     {{-- meal_booking --}}
     <li class="menu-item">
@@ -202,24 +200,24 @@
 
             </ul>
         </li>
-        {{-- Admin Setting --}}
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Users">Setting</div>
-                {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{ route('admin.setting.add_admin') }}" class="menu-link">
-                        <div data-i18n="show user">Add Admin</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ route('admin.setting.view') }}" class="menu-link">
-                        <div data-i18n="show user">View Admin</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+    {{-- Admin Setting --}}
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+            <div data-i18n="Users">Setting</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('admin.setting.add_admin') }}" class="menu-link">
+                    <div data-i18n="show user">Add Admin</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('admin.setting.view') }}" class="menu-link">
+                    <div data-i18n="show user">View Admin</div>
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>

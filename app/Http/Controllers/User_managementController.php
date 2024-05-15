@@ -88,15 +88,17 @@ class User_managementController extends Controller
 
     public function all_user()
     {
+        $users = User::with('user_role')->get();
+        // dd($users);
         return view('admin.user_management.all_user', [
-            'saveusers' => User::all()
+            'saveusers' => $users,
         ]);
     }
 
     public function edit($id)
     {
         $saveuser = User::find($id);
-        $departments = Department::get(); // Retrieve all departments
+        $departments = Department::get();
         return view('admin.user_management.edit', compact('saveuser', 'departments'));
     }
 
@@ -105,6 +107,7 @@ class User_managementController extends Controller
         $user = User::find($id);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'role_id' => 'required',
             'mobile' => 'required',
             'Whatsapp' => 'required',
             'Telegram' => 'required',
@@ -135,6 +138,7 @@ class User_managementController extends Controller
         $department = Department::where('depart_id',$request->department)->get()->first();
         // dd( $request->all(),$request->department,$request->input('department'),$department->department);
         $user->name = $request->name;
+        $user->role_id = $request->role_id;
         $user->mobile = $request->mobile;
         $user->Whatsapp = $request->Whatsapp;
         $user->Telegram = $request->Telegram;

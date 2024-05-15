@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserPayments;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 
 class paymentController extends Controller
@@ -22,13 +23,15 @@ class paymentController extends Controller
             'amount' => 'required|numeric'
         ]);
 
-        $Payments = new UserPayments();
-        $Payments->user_id = $request->user_id;
-        $Payments->month = $request->month;
-        $Payments->payment_date = $request->payment_date;
-        $Payments->amount = $request->amount;
-        $Payments->save();
-
+        $payments = new UserPayments();
+        $payments->user_id = $request->user_id;
+        $payments->month = $request->month . '-01';
+        $payments->payment_date = $request->payment_date;
+        $payments->amount = $request->amount;
+        $payments->save();
+        if($payments->save()){
+            Toastr::success('Payment made successfully ', 'success');
+        }
         return back()->with('message', 'Info saved successfully');
     }
 

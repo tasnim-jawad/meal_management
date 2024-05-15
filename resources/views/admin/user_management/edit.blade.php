@@ -15,17 +15,17 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="row mb-3">
+                            <div class="row mb-3">
                                 <label for="inputEmailAddress2" class="col-sm-3 col-form-label">User Role</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" name="user_role" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
+                                    <select class="form-select meal_user" name="role_id" aria-label="Default select example">
+                                        <option selected disabled>select role</option>
                                         @foreach (App\Models\UserRole::get() as $role)
-                                        <option value="{{ $role->id }}" @if ($role->id == $saveuser->user_role) selected @endif>{{ $role->user_role }}</option>
+                                            <option value="{{ $role->id }}" @if ($role->id == $saveuser->role_id) selected @endif>{{ $role->user_role }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="row mb-3">
                                 <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Mobile</label>
@@ -53,12 +53,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="row mb-3">
-                                <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Department</label>
-                                <div class="col-sm-9">
-                                    <input type="text" value="{{$saveuser->department}}" name="department" class="form-control" id="inputEmailAddress2" placeholder="Department">
-                                </div>
-                            </div> --}}
                             <div class="row mb-3">
                                 <label for="department" class="col-sm-3 col-form-label">Department</label>
                                 <div class="col-sm-9">

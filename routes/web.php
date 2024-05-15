@@ -21,6 +21,7 @@ use App\Http\Controllers\user_paymentController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\duelistcontroller;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\settingController;
 use Carbon\Carbon;
 
@@ -35,7 +36,7 @@ use Carbon\Carbon;
 |
 */
 Route::get('/', [frontEndController::class, 'index'])->name('/');
-Route::get('/Meal_Booking', [frontEndController::class, 'Meal_Booking'])->name('frontEnd.Meal_Booking.Meal_Booking')->middleware(['isuser']);
+Route::get('/Meal_Booking', [frontEndController::class, 'Meal_Booking'])->name('frontEnd.Meal_Booking.Meal_Booking')->middleware(['isStudent']);
 
 // Route::prefix('register')->group(function(){
 //     Route::get('/register',[registerController::class,'register'])->name('frontEnd.register.register');
@@ -90,10 +91,6 @@ Route::get('/generate-pdf/{id}', [detailsController::class, 'showPdf'])->name('g
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');->middleware('isadmin')
-    //
     Route::middleware(['isadmin'])->group(function () {
 
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard.home');
@@ -137,79 +134,85 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::post('/destroy', [BatchController::class,'destroy'])->name('batch.destroy');
             Route::post('/restore', [BatchController::class,'restore'])->name('batch.restore');
         });
-    });
-
-
-    // Route::prefix('meal_register')->group(function () {
-    //     Route::get('/Add_user_meal', [mealRegistercontroller::class, 'Add_user_meal'])->name('admin.meal_register.Add_user_meal');
-    //     Route::post('/store', [mealRegistercontroller::class, 'store'])->name('admin.meal_register.store');
-    //     Route::get('/all_user_meal', [mealRegistercontroller::class, 'all_user_meal'])->name('admin.meal_register.all_user_meal');
-    //     Route::get('/delete/{id}', [mealRegistercontroller::class, 'delete'])->name('admin.meal_register.delete');
-
-    // });
-
-    Route::prefix('meal_rate')->group(function () {
-        Route::get('/add_meal_rate', [mealRateController::class, 'add_meal_rate'])->name('admin.meal_rate.add_meal_rate');
-        Route::post('/store', [mealRateController::class, 'store'])->name('admin.meal_rate.store');
-        Route::get('/all_meal_rate', [mealRateController::class, 'all_meal_rate'])->name('admin.meal_rate.all_meal_rate');
-        Route::get('/find/{id}', [mealRateController::class, 'find'])->name('admin.meal_rate.edit');
-        Route::post('/update/{id}', [mealRateController::class, 'update'])->name('admin.meal_rate.update');
-        Route::get('/delete/{id}', [mealRateController::class, 'delete'])->name('admin.meal_rate.delete');
-    });
-
-    Route::prefix('daily_expense')->group(function () {
-        Route::get('/add_expense', [dailyExpenseController::class, 'add_expense'])->name('admin.daily_expense.add_expense');
-        Route::post('/store', [dailyExpenseController::class, 'store'])->name('admin.daily_expense.store');
-        Route::get('/all_expense', [dailyExpenseController::class, 'all_expense'])->name('admin.daily_expense.all_expense');
-        Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
-        Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
-        Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
-        Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
-
-    });
 
 
 
+        // Route::prefix('meal_register')->group(function () {
+        //     Route::get('/Add_user_meal', [mealRegistercontroller::class, 'Add_user_meal'])->name('admin.meal_register.Add_user_meal');
+        //     Route::post('/store', [mealRegistercontroller::class, 'store'])->name('admin.meal_register.store');
+        //     Route::get('/all_user_meal', [mealRegistercontroller::class, 'all_user_meal'])->name('admin.meal_register.all_user_meal');
+        //     Route::get('/delete/{id}', [mealRegistercontroller::class, 'delete'])->name('admin.meal_register.delete');
+
+        // });
+
+        Route::prefix('meal_rate')->group(function () {
+            Route::get('/add_meal_rate', [mealRateController::class, 'add_meal_rate'])->name('admin.meal_rate.add_meal_rate');
+            Route::post('/store', [mealRateController::class, 'store'])->name('admin.meal_rate.store');
+            Route::get('/all_meal_rate', [mealRateController::class, 'all_meal_rate'])->name('admin.meal_rate.all_meal_rate');
+            Route::get('/find/{id}', [mealRateController::class, 'find'])->name('admin.meal_rate.edit');
+            Route::post('/update/{id}', [mealRateController::class, 'update'])->name('admin.meal_rate.update');
+            Route::get('/delete/{id}', [mealRateController::class, 'delete'])->name('admin.meal_rate.delete');
+        });
+
+        Route::prefix('daily_expense')->group(function () {
+            Route::get('/add_expense', [dailyExpenseController::class, 'add_expense'])->name('admin.daily_expense.add_expense');
+            Route::post('/store', [dailyExpenseController::class, 'store'])->name('admin.daily_expense.store');
+            Route::get('/all_expense', [dailyExpenseController::class, 'all_expense'])->name('admin.daily_expense.all_expense');
+            Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
+            Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
+            Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
+            Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
+
+        });
 
 
-    Route::prefix('info')->group(function () {
-        Route::get('/all_info', [userInfoController::class, 'all_info'])->name('admin.info.all_info');
-    });
 
-    Route::prefix('meal_booking')->group(function () {
-        Route::get('/all_meal', [mealBookingController::class, 'all_meal'])->name('admin.meal_booking.all_meal');
-        Route::post('/store', [mealBookingController::class, 'store']);
-    });
 
-    Route::prefix('user_payment')->group(function () {
-        Route::get('/add_payment', [paymentController::class, 'add_payment'])->name('admin.user_payment.add_payment');
-        Route::post('/store', [paymentController::class, 'store'])->name('admin.user_payment.store');
-        Route::get('/all_user_payment', [paymentController::class, 'all_user_payment'])->name('admin.user_payment.all_payment');
-        // Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
-        // Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
-        // Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
-        // Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
 
-    });
+        Route::prefix('info')->group(function () {
+            Route::get('/all_info', [userInfoController::class, 'all_info'])->name('admin.info.all_info');
+        });
 
-    Route::prefix('duelist')->group(function () {
-        Route::get('/view', [duelistcontroller::class, 'duelist'])->name('admin.duelist.view');
+        Route::prefix('meal_booking')->group(function () {
+            Route::get('/all_meal', [mealBookingController::class, 'all_meal'])->name('admin.meal_booking.all_meal');
+            Route::post('/store', [mealBookingController::class, 'store']);
+        });
 
-    });
+        Route::prefix('user_payment')->group(function () {
+            Route::get('/add_payment', [paymentController::class, 'add_payment'])->name('admin.user_payment.add_payment');
+            Route::post('/store', [paymentController::class, 'store'])->name('admin.user_payment.store');
+            Route::get('/all_user_payment', [paymentController::class, 'all_user_payment'])->name('admin.user_payment.all_payment');
+            // Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
+            // Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
+            // Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
+            // Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
 
-    Route::prefix('setting')->group(function () {
-        Route::get('/add_admin', [settingController::class, 'add_admin'])->name('admin.setting.add_admin');
-        Route::post('/store', [settingController::class, 'store'])->name('admin.setting.store');
-        Route::get('/view', [settingController::class, 'view'])->name('admin.setting.view');
-        Route::get('/edit/{id}', [settingController::class, 'edit'])->name('admin.setting.edit');
-        Route::post('/update/{id}', [settingController::class, 'update'])->name('admin.setting.update');
-        Route::get('/delete/{id}', [settingController::class, 'delete'])->name('admin.setting.delete');
+        });
 
-        // Route::get('/all_user_payment', [paymentController::class, 'all_user_payment'])->name('admin.user_payment.all_payment');
-        // Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
-        // Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
-        // Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
-        // Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
+        Route::prefix('duelist')->group(function () {
+            Route::get('/view', [duelistcontroller::class, 'duelist'])->name('admin.duelist.view');
+
+        });
+
+        Route::prefix('report')->group(function () {
+            Route::get('/index', [ReportController::class, 'index'])->name('admin.report.index');
+        });
+
+        Route::prefix('setting')->group(function () {
+            Route::get('/add_admin', [settingController::class, 'add_admin'])->name('admin.setting.add_admin');
+            Route::post('/store', [settingController::class, 'store'])->name('admin.setting.store');
+            Route::get('/view', [settingController::class, 'view'])->name('admin.setting.view');
+            Route::get('/edit/{id}', [settingController::class, 'edit'])->name('admin.setting.edit');
+            Route::post('/update/{id}', [settingController::class, 'update'])->name('admin.setting.update');
+            Route::get('/delete/{id}', [settingController::class, 'delete'])->name('admin.setting.delete');
+
+            // Route::get('/all_user_payment', [paymentController::class, 'all_user_payment'])->name('admin.user_payment.all_payment');
+            // Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
+            // Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
+            // Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
+            // Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
+
+        });
 
     });
 

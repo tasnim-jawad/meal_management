@@ -82,7 +82,11 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-semibold d-block">{{Illuminate\Support\Facades\Auth::user()->name}}</span>
-                                    <small class="text-muted">{{Illuminate\Support\Facades\Auth::user()->user_role}}</small>
+                                    @if (Illuminate\Support\Facades\Auth::user()->role_id == 1)
+                                        <small class="text-muted">Admin</small>
+                                    @elseif (Illuminate\Support\Facades\Auth::user()->role_id == 4)
+                                        <small class="text-muted">Student</small>
+                                    @endif
                                 </div>
                             </div>
                         </a>

@@ -32,7 +32,7 @@ class User extends Authenticatable
     // ];
     protected $guarded=[];
 
-   
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     // public function total(){
     //     return $this->hasOne(UserPayments::class,"id",'users_id');
-    // } 
+    // }
 
     public function userpayments(){
         return $this->hasMany(UserPayments::class,"user_id","id");
@@ -80,6 +80,8 @@ class User extends Authenticatable
     }
     // public function user(){
     //     return $this->hasOne(User::class,"id",'user_id');
-    // } 
-    
+    // }
+    public function user_role(){
+        return $this->belongsTo(UserRole::class,'role_id','serial');
+    }
 }

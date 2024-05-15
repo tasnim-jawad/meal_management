@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\daily_expense;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -110,8 +111,9 @@ class dailyExpenseController extends Controller
             // dd($expense);
             $expense->save();
         }
+        Toastr::success('bajar save successfully','success');
 
-        return redirect()->back()->with('message', 'Info save successfully');
+        return redirect()->back()->with('message', 'bajar save successfully');
     }
 
     public function all_expense()

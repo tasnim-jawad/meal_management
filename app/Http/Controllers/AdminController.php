@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MonthlyMealRates;
+use App\Models\User;
 use App\Models\UserMeals;
 use App\Models\UserPayments;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function index(){
+        $user = User::where('id',auth()->id())->with('user_role')->get()->first();
         $this_month = Carbon::now();
         $userpayment = UserPayments::where('month', $this_month->format('Y-m'))->sum('amount');
         // $userpayment = UserPayments::where('month', 'LIKE', $this_month->format('Y-m') . '%')->sum('amount');
@@ -35,7 +37,7 @@ class AdminController extends Controller
         $total_expense = $mealRate * $totalMeal;
         $total_due = $total_expense - $userpayment;
 
-        return view('admin.dashboard.home', compact('userpayment', 'totalMeal', 'tomorrowtotalMeal', 'total_due','mealRate'));
+        return view('admin.dashboard.home', compact('userpayment', 'totalMeal', 'tomorrowtotalMeal', 'total_due','mealRate','user'));
     }
 
 

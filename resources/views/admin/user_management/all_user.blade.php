@@ -20,7 +20,7 @@
                         <th>mobile</th>
                         <th>department</th>
                         <th>user_role</th>
-                        <th>email</th>                       
+                        <th>email</th>
                         <th>Whatsapp Number</th>
                         <th>Telegram Number</th>
                         <th>address</th>
@@ -35,17 +35,17 @@
                         <tr>
                             <td>{{$i++}}</td>
                             <td>{{$user->image}}</td>
-                            <td>{{$user->name}}</td> 
+                            <td>{{$user->name}}</td>
                             <td>{{$user->mobile}}</td>
                             <td>{{$user->department}}</td>
-                            <td>{{$user->user_role}}</td>                        
-                            <td>{{$user->email}}</td>                             
+                            <td>{{$user->user_role->user_role}}</td>
+                            <td>{{$user->email}}</td>
                             <td>{{$user->Whatsapp}}</td>
                             <td>{{$user->Telegram}}</td>
                             <td>{{$user->address}}</td>
-                         
+
                             {{-- <td>{{$user->password}}</td> --}}
-                            
+
 
 
 

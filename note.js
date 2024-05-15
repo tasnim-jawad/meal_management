@@ -39,7 +39,7 @@
     1. monthly report mill rate ,cast,and total ammount -- alada table with export pdf
     2. staff mil alada hobe . alada dashboard
     3. welcome message for all role.
-    4. bajar decending order date .
+    4. bajar decending order date.
     5. user payment,due,meal, etc all show in admin dashboard. (total) user info lagbe adminer
     6. current show in admin dashboard.
     7. due thakle meal hobe na .minimunm 100 thakbe
@@ -57,9 +57,10 @@
     6/admin meal_register and admin add_meal duita eki kaj korche kintu alada ken?
     7/negetive quantity dewa jacche.
     8/all_user path diye user list dekhacche. abar user/all_user diye Due list dekhacche.
-    9/user er department-er jaygay department er name dewa hoyeche .jar fole somossa hocche.
+    9/user er department-er jaygay department er name dewa hoyeche id bebohar na kore .jar fole somossa hocche.
     10/kothao toaster use kora nei
-
+    11/user table-e user_role string deya . user_roll er table thaka sotteo.
+    12/user table-e user_role string deya . user_roll er table thaka sotteo.
 
     *** kivabe user role set kora hoyeche bujha jacche na. set kora jacche na .
 

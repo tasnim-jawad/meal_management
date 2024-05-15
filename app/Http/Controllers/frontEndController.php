@@ -134,7 +134,7 @@ class frontEndController extends Controller
             $mealRate = $Month_check->meal_rate;
         }
 
-        $userinfo = User::where('user_role', 'User')->where('id', $id)->select('id', 'name', 'mobile', 'department')->with(['userpayments' => function ($q) {
+        $userinfo = User::where('role_id', 4)->where('id', $id)->select('id', 'name', 'mobile', 'department')->with(['userpayments' => function ($q) {
             $q->select('id', 'amount', 'user_id');
         }])->with(['userMeal' => function ($r) {
             $r->select('id', 'quantity', 'user_id');
