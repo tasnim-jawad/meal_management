@@ -24,7 +24,6 @@
                         <th>Whatsapp Number</th>
                         <th>Telegram Number</th>
                         <th>address</th>
-                        {{-- <th>password</th> --}}
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -43,12 +42,6 @@
                             <td>{{$user->Whatsapp}}</td>
                             <td>{{$user->Telegram}}</td>
                             <td>{{$user->address}}</td>
-
-                            {{-- <td>{{$user->password}}</td> --}}
-
-
-
-
                             <td>
                                 <a href="{{route('admin.user_management.edit',$user->id)}}" class="btn btn-primary">Edit</a>
                                 <a href="{{route('admin.user_management.delete',$user->id)}}" class="btn btn-danger">Delete</a>

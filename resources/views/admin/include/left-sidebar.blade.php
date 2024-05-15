@@ -91,7 +91,7 @@
             </li>
         </ul>
     </li>
-    {{-- All expense --}}
+    {{-- Report --}}
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
@@ -101,6 +101,11 @@
             <li class="menu-item">
                 <a href="{{ route('admin.report.index') }}" class="menu-link">
                     <div data-i18n="show user">Report</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('admin.report.user_report') }}" class="menu-link">
+                    <div data-i18n="show user">User Report</div>
                 </a>
             </li>
         </ul>

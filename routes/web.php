@@ -196,6 +196,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
         Route::prefix('report')->group(function () {
             Route::get('/index', [ReportController::class, 'index'])->name('admin.report.index');
+            Route::get('/search', [ReportController::class, 'search'])->name('admin.report.search');
+            Route::get('/user-report', [ReportController::class, 'user_report'])->name('admin.report.user_report');
+            Route::get('/user-report/user-search/{user_id}', [ReportController::class, 'user_search'])->name('admin.report.user_report.user_search');
         });
 
         Route::prefix('setting')->group(function () {
