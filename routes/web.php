@@ -9,7 +9,9 @@ use App\Http\Controllers\Api\mealController;
 use App\Http\Controllers\Api\mealRateController;
 use App\Http\Controllers\Api\userInfoController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\CookSalaryController;
 use App\Http\Controllers\detailsController;
+use App\Http\Controllers\DueController;
 use App\Http\Controllers\frontEndBookingController;
 use App\Http\Controllers\frontEndController;
 use App\Http\Controllers\logincontroller;
@@ -46,23 +48,28 @@ Route::get('/Meal_Booking', [frontEndController::class, 'Meal_Booking'])->name('
 Route::prefix ('')->group(function(){
     Route::get('login', [logincontroller::class, 'login'])->name('login');
 });
+Route::middleware(['isStudent'])->group(function (){
+    Route::prefix('user_profile')->group(function () {
+        Route::get('/show', [profileController::class, 'show'])->name('frontEnd.user_profile.show');
+        Route::get('/edit/{id}', [profileController::class, 'edit'])->name('frontEnd.user_profile.edit');
+        Route::post('/update/{id}', [profileController::class, 'update'])->name('frontEnd.user_profile.update');
 
-Route::prefix('user_profile')->group(function () {
-    Route::get('/show', [profileController::class, 'show'])->name('frontEnd.user_profile.show');
-    Route::get('/edit/{id}', [profileController::class, 'edit'])->name('frontEnd.user_profile.edit');
-    Route::post('/update/{id}', [profileController::class, 'update'])->name('frontEnd.user_profile.update');
+    });
+
+    Route::prefix('Booking')->group(function () {
+        Route::get('/add_user_Meal_Booking', [frontEndBookingController::class, 'add_user_Meal_Booking'])->name('frontEnd.Booking.add_user_Meal_Booking');
+        Route::post('/store', [frontEndBookingController::class, 'store'])->name('frontEnd.Booking.store');
+        Route::get('/show', [frontEndBookingController::class, 'show'])->name('frontEnd.Booking.show');
+        Route::get('/edit/{id}', [frontEndBookingController::class, 'edit'])->name('frontEnd.Booking.edit');
+        Route::post('/update/{id}', [frontEndBookingController::class, 'update'])->name('frontEnd.Booking.update');
+        Route::get('/delete/{id}', [frontEndBookingController::class, 'delete'])->name('frontEnd.Booking.delete');
+        Route::get('/search', [frontEndBookingController::class, 'search'])->name('frontEnd.Booking.search');
+
+    });
 
 });
-Route::prefix('Booking')->group(function () {
-    Route::get('/add_user_Meal_Booking', [frontEndBookingController::class, 'add_user_Meal_Booking'])->name('frontEnd.Booking.add_user_Meal_Booking');
-    Route::post('/store', [frontEndBookingController::class, 'store'])->name('frontEnd.Booking.store');
-    Route::get('/show', [frontEndBookingController::class, 'show'])->name('frontEnd.Booking.show');
-    Route::get('/edit/{id}', [frontEndBookingController::class, 'edit'])->name('frontEnd.Booking.edit');
-    Route::post('/update/{id}', [frontEndBookingController::class, 'update'])->name('frontEnd.Booking.update');
-    Route::get('/delete/{id}', [frontEndBookingController::class, 'delete'])->name('frontEnd.Booking.delete');
-    Route::get('/search', [frontEndBookingController::class, 'search'])->name('frontEnd.Booking.search');
 
-});
+
 Route::prefix('user_payment')->group(function () {
     Route::get('/show', [user_paymentController::class, 'show'])->name('frontEnd.user_payment.show');
     Route::get('/user-payments/pdf', [user_paymentController::class, 'showPdf'])->name('user-payments.pdf');
@@ -97,6 +104,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
         Route::get('/add_user', [User_managementController::class, 'add_user'])->name('admin.user_management.add_user');
         Route::post('/store', [User_managementController::class, 'store'])->name('admin.user_management.store');
         Route::get('/all_user', [User_managementController::class, 'all_user'])->name('admin.user_management.all_user');
+        Route::get('/search', [User_managementController::class, 'all'])->name('admin.search.all');
         Route::get('/edit/{id}', [User_managementController::class, 'edit'])->name('admin.user_management.edit');
         Route::post('/update/{id}', [User_managementController::class, 'update'])->name('admin.user_management.update');
         Route::get('/delete/{id}', [User_managementController::class, 'delete'])->name('admin.user_management.delete');
@@ -158,16 +166,22 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::get('/add_expense', [dailyExpenseController::class, 'add_expense'])->name('admin.daily_expense.add_expense');
             Route::post('/store', [dailyExpenseController::class, 'store'])->name('admin.daily_expense.store');
             Route::get('/all_expense', [dailyExpenseController::class, 'all_expense'])->name('admin.daily_expense.all_expense');
+            Route::get('/expense-date', [dailyExpenseController::class, 'expense_date'])->name('admin.daily_expense.expense_date');
+            Route::get('/expense-daily/{date}', [dailyExpenseController::class, 'expense_daily'])->name('admin.daily_expense.expense_daily');
             Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
             Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
             Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
             Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
 
+            Route::get('/all-cook-salary', [CookSalaryController::class, 'all_cook_salary'])->name('admin.daily_expense.all_cook_salary');
+            Route::get('/all-cook-salary-search', [CookSalaryController::class, 'all_cook_salary_search'])->name('admin.daily_expense.all_cook_salary_search');
+            Route::get('/add-cook-salary', [CookSalaryController::class, 'add_cook_salary'])->name('admin.daily_expense.add_cook_salary');
+            Route::post('/store-cook-salary', [CookSalaryController::class, 'store_cook_salary'])->name('admin.daily_expense.store_cook_salary');
+            Route::get('/edit-cook-salary/{id}', [CookSalaryController::class, 'edit_cook_salary'])->name('admin.daily_expense.edit_cook_salary');
+            Route::post('/update-cook-salary', [CookSalaryController::class, 'update_cook_salary'])->name('admin.daily_expense.update_cook_salary');
+            Route::post('/delete-cook-salary', [CookSalaryController::class, 'update_cook_salary'])->name('admin.daily_expense.update_cook_salary');
+
         });
-
-
-
-
 
         Route::prefix('info')->group(function () {
             Route::get('/all_info', [userInfoController::class, 'all_info'])->name('admin.info.all_info');
@@ -199,6 +213,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::get('/search', [ReportController::class, 'search'])->name('admin.report.search');
             Route::get('/user-report', [ReportController::class, 'user_report'])->name('admin.report.user_report');
             Route::get('/user-report/user-search/{user_id}', [ReportController::class, 'user_search'])->name('admin.report.user_report.user_search');
+            Route::get('/user-report/user-monthly', [ReportController::class, 'user_search_monthly'])->name('admin.report.user_report.user_search_monthly');
+        });
+
+        Route::prefix('due')->group(function () {
+            Route::get('/daily-data', [DueController::class, 'daily_data'])->name('admin.due.daily_data');
+            Route::get('/monthly-data', [DueController::class, 'monthly_data'])->name('admin.due.monthly_data');
+            Route::get('/yearly-data', [DueController::class, 'yearly_data'])->name('admin.due.yearly_data');
         });
 
         Route::prefix('setting')->group(function () {

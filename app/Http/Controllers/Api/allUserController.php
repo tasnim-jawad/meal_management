@@ -22,7 +22,7 @@ class allUserController extends Controller
             $mealRate = $Month_check->meal_rate;
         }
 
-        $userinfo = User::where('user_role', 'User')->select('id', 'name', 'mobile', 'department')
+        $userinfo = User::where('role_id', 4)->select('id', 'name', 'mobile', 'department')
                         ->with(['userpayments' => function ($q) {
                             $q->select('id', 'amount', 'user_id');
                         }])

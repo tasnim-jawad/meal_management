@@ -1,67 +1,68 @@
 @extends('admin.master')
 @section('content')
-
     <div class="row">
+        <!-- Total income -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">Current month User payment</h5>
-                    <p class="mb-2 mt-1">{{$userpayment}}</p>
+                    <h5 class="card-title mb-1 pt-2">{{$total_income}}</h5>
+                    <p class="mb-2 mt-1">Current month User Payment</p>
+                </div>
+            </div>
+        </div>
+        <!-- Total expense -->
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
+            <div class="card" style="height: 200px">
+                <div class="card-body">
+                    <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
+                    <h5 class="card-title mb-1 pt-2">{{$total_expense}}</h5>
+                    <p class="mb-2 mt-1">Current month Bajar Expense</p>
                 </div>
             </div>
         </div>
 
-        <!-- Total Sales -->
+        <!-- Total meal -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-info mb-2 rounded"><i class="ti ti-chart-bar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">Current month total meal</h5>
-                    <p class="mb-2 mt-1">{{$totalMeal}} </p>
+                    <h5 class="card-title mb-1 pt-2">{{$total_meal}}</h5>
+                    <p class="mb-2 mt-1">Current Month Total Meal</p>
                 </div>
             </div>
         </div>
 
         <!-- Total Profit -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
-            <a href="{{ route('admin.user.all_user') }}">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">All User Total Due</h5>
-                    <p class="mb-2 mt-1">{{$total_due}}</p>
+                    <h5 class="card-title mb-1 pt-2">{{round($balance)}}</h5>
+                    <p class="mb-2 mt-1">Balance</p>
                 </div>
-                <!-- Add the link here with the href attribute -->
-             </a>
             </div>
         </div>
 
         <!-- Total Sales -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
-            <a href="#">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">Tomorrow Total meal</h5>
-                    <p class="mb-2 mt-1">{{$tomorrowtotalMeal}}</p>
+                    <h5 class="card-title mb-1 pt-2">{{$tomorrow_total_meal}}</h5>
+                    <p class="mb-2 mt-1">Tomorrow Total meal</p>
                 </div>
-                <!-- Add the link here with the href attribute -->
-             </a>
             </div>
         </div>
 
         {{-- this month meal rate --}}
         <div class="col-xl-3 col-md-4 col-6 mb-4">
-            <a href="#">
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">Current month meal rate</h5>
-                    <p class="mb-2 mt-1">{{$mealRate}}</p>
+                    <h5 class="card-title mb-1 pt-2">{{round($total_meal_rate)}}</h5>
+                    <p class="mb-2 mt-1">Current month meal rate</p>
                 </div>
-                <!-- Add the link here with the href attribute -->
-             </a>
             </div>
         </div>
     </div>

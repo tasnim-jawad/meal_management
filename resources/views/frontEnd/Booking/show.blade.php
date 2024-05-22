@@ -55,7 +55,7 @@
                     @php $i=1 @endphp
                     @foreach (array_reverse($meals->all()) as $meal)
                         <tr>
-                            <td>{{ $i }}</td>
+                            <td>{{ $i++ }}</td>
                             {{-- <td>{{ $meal->user->name }}</td> --}}
                             <td>{{ $meal->quantity }}</td>
                             <td>{{ Carbon\Carbon::parse($meal->date)->toFormattedDateString() }}</td>
@@ -68,14 +68,14 @@
                                 ->setSecond(0);
                             $mealDate = Carbon\Carbon::parse($meal->date);
                         @endphp
-                        
+
                         @if ($currentTime->lte($mealCutoffTime) && $mealDate->isSameDay($currentTime))
                             <a href="{{ route('frontEnd.Booking.edit', $meal->id) }}" class="btn btn-primary">Edit</a>
                             <a href="{{ route('frontEnd.Booking.delete', $meal->id) }}" class="btn btn-danger">Delete</a>
                         @else
                             <span class="text-danger">Edit & Delete Disabled</span>
                         @endif
-                        
+
                         </td> --}}
                             <td>
                                 @if ($meal->date >= \Carbon\Carbon::now())

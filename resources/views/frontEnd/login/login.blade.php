@@ -12,39 +12,39 @@
             </div>
 
             <div class="row g-0">
-                <div class="col-lg-4 reservation-img aos-init aos-animate"
+                <div class="col-md-12 col-lg-4 reservation-img aos-init aos-animate"
                      style="background-image: url({{ asset('frontEndAsset') }}/img/reservation.jpg);"
                      data-aos="zoom-out" data-aos-delay="200">
                 </div>
 
-                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
+                <div class="col-md-12 col-lg-8 d-flex align-items-center reservation-form-bg">
                     @if (session('status'))
                         <div class="mb-4 font-medium text-sm text-green-600">
                             {{ session('status') }}
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" class="p-3 pt-lg-0 w-100">
                         @csrf
-                        <div class="row gy-4" style="padding-left: 5px;">
-                            <div class="col-lg-12 col-md-6 root" value="{{ __('mobile') }}">
+                        <div class="row m-0 ps-1 root">
+                            <div class="col-lg-12 col-md-6 mb-2" value="{{ __('mobile') }}">
                                 <label class="mb-3">Enter your mobile number</label>
                                 <input type="text" name="mobile" :value="old('mobile')" class="form-control"
                                        id="mobile" placeholder="Your mobile" data-rule="minlen:4"
                                        data-msg="Please enter at least 4 chars">
                                 <div class="validate"></div>
                                 @error('mobile')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger p-2 mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-lg-12 col-md-6" value="{{ __('password') }}">
+                            <div class="col-lg-12 col-md-6 mb-2 " value="{{ __('password') }}">
                                 <label class="mb-3">Enter your password</label>
                                 <input type="password" name="password" :value="old('password')" class="form-control"
                                        id="password" placeholder="Your password" data-rule="minlen:4"
                                        data-msg="Please enter at least 4 chars" />
                                 <div class="validate"></div>
                                 @error('password')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <div class="alert alert-danger p-2 mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                             {{-- <div class="col-lg-4 col-md-6" value="{{ __('user_role') }}">
@@ -58,7 +58,7 @@
                             </div> --}}
                         </div>
 
-                        <div class="flex items-center justify-end mt-4">
+                        <div class="flex items-center justify-end mt-4 ps-3">
                             {{-- @if (Route::has('password.request'))
                                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" style="margin-left:10px" href="{{ route('password.request') }}">
                                     {{ __('Forgot your password?') }}

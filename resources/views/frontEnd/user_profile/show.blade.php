@@ -28,8 +28,8 @@
                 <td>{{ $user->address }}</td>
             </tr>
         </table>
-        
-        <a href="{{ route('frontEnd.user_profile.edit',$user->id) }}" class="btn btn-primary">Edit Profile</a>
+
+        {{-- <a href="{{ route('frontEnd.user_profile.edit',$user->id) }}" class="btn btn-primary">Edit Profile</a> --}}
     </div>
 </div>
 

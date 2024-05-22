@@ -50,7 +50,7 @@
     </li>
 
     {{-- Meal rate --}}
-    <li class="menu-item">
+    {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">Meal rate</div>
@@ -68,7 +68,7 @@
             </li>
 
         </ul>
-    </li>
+    </li> --}}
 
 
     {{-- All expense --}}
@@ -85,7 +85,12 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ route('admin.daily_expense.all_expense') }}" class="menu-link">
+                <a href="{{ route('admin.daily_expense.add_cook_salary') }}" class="menu-link">
+                    <div data-i18n="show user">Add Cook Salary</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('admin.daily_expense.expense_date') }}" class="menu-link">
                     <div data-i18n="show user">All Expense</div>
                 </a>
             </li>
@@ -118,21 +123,41 @@
             <div data-i18n="Users">User Due List</div>
             {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
-        <ul class="menu-sub">
+        {{-- <ul class="menu-sub">
             <li class="menu-item">
                 <a href="{{ route('admin.user.all_user') }}" class="menu-link">
                     <div data-i18n="show user">All User</div>
+                </a>
+            </li>
+        </ul> --}}
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('admin.due.daily_data') }}" class="menu-link">
+                    <div data-i18n="show user">Daile Due</div>
+                </a>
+            </li>
+        </ul>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('admin.due.monthly_data') }}" class="menu-link">
+                    <div data-i18n="show user">Monthly Due</div>
+                </a>
+            </li>
+        </ul>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('admin.due.yearly_data') }}" class="menu-link">
+                    <div data-i18n="show user">Total Due</div>
                 </a>
             </li>
         </ul>
     </li>
 
     {{-- meal_booking --}}
-    <li class="menu-item">
+    {{-- <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons ti ti-smart-home"></i>
             <div data-i18n="Users">User Meal Booking List</div>
-            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
@@ -141,7 +166,7 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> --}}
 
           {{-- Meal Register --}}
     {{-- <li class="menu-item">
@@ -163,48 +188,48 @@
         </ul>
     </li> --}}
 
-           {{-- Add payment --}}
+        {{-- Add payment --}}
 
-           <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Users">User Payment</div>
-                {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{ route('admin.user_payment.add_payment') }}" class="menu-link">
-                        <div data-i18n="show user">Add Payment</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ route('admin.user_payment.all_payment') }}" class="menu-link">
-                        <div data-i18n="show user">All User Payment</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        {{-- Meal rate --}}
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Users">Batch</div>
-                {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{ route('batch.create') }}" class="menu-link">
-                        <div data-i18n="create user">Add Batch</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ route('batch.all') }}" class="menu-link">
-                        <div data-i18n="show user">All Batch</div>
-                    </a>
-                </li>
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+            <div data-i18n="Users">User Payment</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('admin.user_payment.add_payment') }}" class="menu-link">
+                    <div data-i18n="show user">Add Payment</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('admin.user_payment.all_payment') }}" class="menu-link">
+                    <div data-i18n="show user">All User Payment</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    {{-- Meal rate --}}
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+            <div data-i18n="Users">Batch</div>
+            {{-- <div class="badge bg-label-primary rounded-pill ms-auto">3</div> --}}
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="{{ route('batch.create') }}" class="menu-link">
+                    <div data-i18n="create user">Add Batch</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('batch.all') }}" class="menu-link">
+                    <div data-i18n="show user">All Batch</div>
+                </a>
+            </li>
 
-            </ul>
-        </li>
+        </ul>
+    </li>
     {{-- Admin Setting --}}
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">

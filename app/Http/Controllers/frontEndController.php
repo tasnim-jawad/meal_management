@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daily_expense;
 use App\Models\UserMeals;
 use App\Models\UserPayments;
 use App\Models\MonthlyMealRates;
@@ -120,33 +121,31 @@ class frontEndController extends Controller
 
     public function Meal_Booking()
     {
-        $id = auth()->user()->id;
-        $this_month = Carbon::today();
-        // dd($this_month);
-        $Totalmeal = UserMeals::whereMonth('date', $this_month)->where('user_id', $id)->sum('quantity');
-        $payment = UserPayments::where('user_id', $id)->sum('amount');
+        $user_id = auth()->user()->id;
+        $user = User::where('id',$user_id)->get()->first();
 
-        $this_month = Carbon::today();
-        $Month_check = MonthlyMealRates::whereMonth('month', $this_month)->first();
-        $mealRate = 0;
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
 
-        if ($Month_check !== null) {
-            $mealRate = $Month_check->meal_rate;
-        }
+        $total_expence = daily_expense::all()->sum('total');
+        $total_meal = UserMeals::all()->sum('quantity');
+        $total_date = UserMeals::select('date')->get();
+        $total_date_array = $total_date->pluck('date')->toArray();
+        $total_month = $this->unique_month_count($total_date_array);
 
-        $userinfo = User::where('role_id', 4)->where('id', $id)->select('id', 'name', 'mobile', 'department')->with(['userpayments' => function ($q) {
-            $q->select('id', 'amount', 'user_id');
-        }])->with(['userMeal' => function ($r) {
-            $r->select('id', 'quantity', 'user_id');
-        }])
-            ->withSum('userpayments', 'amount')
-            ->withSum('userMeal', 'quantity')
-            ->first();
+        $cook_salary = Settings::latest()->first()->cook_salary;
+        $total_cook_salary = $cook_salary * $total_month;
 
-        $total_payable = $mealRate * $userinfo->user_meal_sum_quantity;
-        $due = $total_payable - $userinfo->userpayments_sum_amount;
-        $userinfo->due = $due;
+        $total_meal_rate = ($total_expence + $total_cook_salary) / $total_meal;
 
-        return view('frontEnd.Meal_Booking.Meal_Booking', compact('userinfo', 'Totalmeal', 'payment', 'due', 'mealRate'));
+        $meal_rate = total_monthly($month,$year)->total_meal_rate;
+        $monthly_meal_users = monthly_meal_users($month,$year,$user_id);
+        $total_monthly_meal = $monthly_meal_users->total_monthly_meal;
+        $monthly_payment_users = monthly_payment_users($month,$year,$user_id);
+        $total_payment_monthly = $monthly_payment_users->total_payment_monthly;
+        $balance = $total_payment_monthly - ($total_monthly_meal * $meal_rate);
+
+        return view('frontEnd.Meal_Booking.Meal_Booking', compact('meal_rate', 'total_monthly_meal', 'total_payment_monthly', 'balance'));
     }
 }

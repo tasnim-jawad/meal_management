@@ -13,11 +13,11 @@
             <form action="{{ route('admin.daily_expense.search') }}" method="GET">
                 @csrf
                 <label for="searchText">Search:</label>
-                <input type="text" name="searchText" id="searchText" placeholder="Enter search text">
+                <input class="form-control mb-2" type="text" name="searchText" id="searchText" placeholder="Enter search text">
                 <label for="selectedDate">Select Date:</label>
-                <input type="date" name="selectedDate" id="selectedDate">
-                <button type="submit" class="btn btn-primary">Filter</button>
-                <a href="{{ route('admin.daily_expense.all_expense') }}" class="btn btn-danger">Reset</a>
+                <input class="form-control mb-2" type="date" name="selectedDate" id="selectedDate">
+                <button type="submit" class="btn btn-primary ">Filter</button>
+                {{-- <a href="{{ route('admin.daily_expense.all_expense') }}" class="btn btn-danger btn-sm">Reset</a> --}}
             </form>
         </div>
         <div class="card-datatable table-responsive">
@@ -55,9 +55,14 @@
                             <td></td>
                             <td colspan="4">Total Expense</td>
                             <td >{{$total_expense}}</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                 </tbody>
             </table>
+            <div class="mt-3 px-4">
+                {{ $expense->links() }}
+            </div>
         </div>
     </div>
 @endsection

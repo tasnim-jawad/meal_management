@@ -37,7 +37,7 @@
     Task edit task
 
     1. monthly report mill rate ,cast,and total ammount -- alada table with export pdf
-    2. staff mil alada hobe . alada dashboard
+    2. staff mil alada hobe .
     3. welcome message for all role.
     4. bajar decending order date.
     5. user payment,due,meal, etc all show in admin dashboard. (total) user info lagbe adminer
@@ -78,3 +78,51 @@
     1/department onujai batch kivabe dekhano jabe?
 */
 
+
+/*
+    Project: meal management mahabub
+    User: MD Shefat Masum
+    Github: https://github.com/md-shefat-masum
+    Date: 16 May 2024
+    Time: 16:30 pm
+    Path: note.js
+    Task edit task
+    Updating = Muhammad Tasnimul Hasan
+
+    1/ Due list at a glance.
+    2/ stuff Due list at a glance alada hobe. karon due tader-i thakbe.
+    3/tarikh onujai bajar cost dekhabe . ekti button thakbe shekhane details thakbe.
+    4/user report-e mash add korte hobe.
+    5/off day meal can not be booked
+
+
+*/
+
+
+/*
+    Project: meal management mahabub
+    User: MD Shefat Masum
+    Github: https://github.com/md-shefat-masum
+    Date: 20 May 2024
+    Path: note.js
+    Task edit task
+    Updating = Muhammad Tasnimul Hasan
+
+    1/ Admin mail diye login korbe.
+    2/ batch requarment uthay dite hobe.
+    3/ payment add-e mobile number diye search dibe tokhon sho info chole ashbe.
+
+*/
+
+/*
+
+    user1=[
+        [
+            "2024-04-01" => [
+                "total_meal" => 3,
+                "mealrate" => 55,
+            ]
+        ]
+    ]
+
+*/

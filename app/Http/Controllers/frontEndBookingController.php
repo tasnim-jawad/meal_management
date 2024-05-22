@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\UserMeals;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -13,9 +14,9 @@ class frontEndBookingController extends Controller
     {
         return view('frontEnd.Booking.add_user_Meal_Booking');
     }
+
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'quantity' => 'required|integer|min:1|max:1',
             'date' => 'required',
@@ -26,36 +27,69 @@ class frontEndBookingController extends Controller
         }
 
         $user_id = auth()->user()->id;
+        $user = User::where('id',$user_id)->get()->first();
+
         $selected_date = Carbon::parse($request->date)->format('Y-m-d');
         $current_date = Carbon::now()->format('Y-m-d');
-        // @dd($current_date);
+
+        $is_date_unique = !UserMeals::where('date',$selected_date)->where('user_id',$user_id)->exists();
+        // dd($is_date_unique);
         if ($selected_date < $current_date) {
-            // return redirect()->back()->with('error_today', 'Cannot book a meal for today.');
             return redirect()->back()->with('error', 'Cannot book a meal for a past date.');
 
-        } elseif($selected_date === $current_date) {
-
+        }elseif($selected_date === $current_date) {
             $currentTime = Carbon::now();
-            $meal_set_last_time = Carbon::today()->setHour(7)->setMinute(0)->setSecond(0);
-            $message = 'Meals cannot be booked after 7:00 am';
+            $meal_set_last_time = Carbon::today()->setHour(10)->setMinute(0)->setSecond(0);
+            $message = 'Meals cannot be booked after 10:00 am';
 
         }else{
             $currentTime = Carbon::now();
-            $meal_set_last_time = Carbon::today()->addDay()->setHour(7)->setMinute(0)->setSecond(0);
+            $meal_set_last_time = Carbon::today()->addDay()->setHour(10)->setMinute(0)->setSecond(0);
             $message = 'something wrong' ;
         }
 
+
         if ($currentTime->lte($meal_set_last_time)) {
-            $meals = new UserMeals();
-            $meals->user_id = $user_id;
-            $meals->quantity = $request->quantity;
-            $meals->date = $selected_date;
-            $meals->save();
-            return redirect()->back()->with('success', 'Meal booked successfully.');
+
+            if($user->role_id === 4 || $user->role_id === 2){
+                $now = Carbon::now();
+                $year = $now->year;
+                $month = $now->month;
+
+                $meal_rate = total_monthly($month,$year)->total_meal_rate;
+                $monthly_meal_users = monthly_meal_users($month,$year,$user_id);
+                $total_monthly_meal = $monthly_meal_users->total_monthly_meal;
+                $monthly_payment_users = monthly_payment_users($month,$year,$user_id);
+                $total_payment_monthly = $monthly_payment_users->total_payment_monthly;
+                $balance = $total_payment_monthly - ($total_monthly_meal * $meal_rate);
+
+                if($balance >= 100){
+                    $meals = new UserMeals();
+                    $meals->user_id = $user_id;
+                    $meals->quantity = $request->quantity;
+                    $meals->date = $selected_date;
+                    $meals->save();
+                    return redirect()->back()->with('success', 'Meal booked successfully.');
+                }else{
+                    return redirect()->back()->with('error', 'Your balance is insufficient. Pay in advance first. Contact admin for any queries');
+                }
+            }else{
+                if($is_date_unique){
+                    $meals = new UserMeals();
+                    $meals->user_id = $user_id;
+                    $meals->quantity = $request->quantity;
+                    $meals->date = $selected_date;
+                    $meals->save();
+                    return redirect()->back()->with('success', 'Meal booked successfully.');
+                }else{
+                    return redirect()->back()->with('error', 'Not more than one meal can be booked in a day.');
+                }
+
+            }
+
         } else {
             return redirect()->back()->with('error', $message .'. Please contact the admin.');
         }
-
 
     }
 
@@ -66,7 +100,7 @@ class frontEndBookingController extends Controller
         // dd(auth()->user());
         $id = auth()->user()->id;
         $meals = UserMeals::where('user_id', $id)->with('user')
-            // ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->get();
         return view('frontEnd.Booking.show', compact('meals'));
     }

@@ -37,9 +37,8 @@ class paymentController extends Controller
 
     public function all_user_payment()
     {
-        return view('admin.user_payment.all_payment', [
-            'Payments' => UserPayments::with('user')->get()
-        ]);
+        $payments = UserPayments::with('user')->paginate(20);
+        return view('admin.user_payment.all_payment', compact('payments'));
     }
 
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daily_expense;
 use App\Models\MonthlyMealRates;
+use App\Models\Settings;
 use App\Models\User;
 use App\Models\UserMeals;
 use App\Models\UserPayments;
@@ -13,31 +15,30 @@ class AdminController extends Controller
 {
     public function index(){
         $user = User::where('id',auth()->id())->with('user_role')->get()->first();
-        $this_month = Carbon::now();
-        $userpayment = UserPayments::where('month', $this_month->format('Y-m'))->sum('amount');
-        // $userpayment = UserPayments::where('month', 'LIKE', $this_month->format('Y-m') . '%')->sum('amount');
 
-        //total meals for whole month
-        $totalMeal = UserMeals::whereMonth('date', $this_month)->sum('quantity');
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
 
-        $tomorrow = Carbon::tomorrow();
+        $total_income = UserPayments::whereYear('month', $year)->whereMonth('month', $month)->get()->sum('amount');
+        $total_expense = daily_expense::whereYear('bajar_date', $year)->whereMonth('bajar_date', $month)->get()->sum('total');
+        $total_meal = UserMeals::whereYear('date', $year)->whereMonth('date', $month)->get()->sum('quantity');
+        $cook_salary = Settings::latest()->first()->cook_salary;
+
+        $total_meal_rate = ($total_expense + $cook_salary) / $total_meal;
+        $balance = $total_income - $total_expense;
+        // $monthly_data = meal_rate($month,$year);
+        // $meal_rate = $monthly_data->meal_rate;
+        // $total_meal_all = $monthly_data->total_meal_all;
+        // $total_expense = $monthly_data->total_expense;
+        // $total_income = $monthly_data->total_income;
+        // $balance = $total_income - $total_expense;
+
         //total meals for tomorrow
-        $tomorrowtotalMeal = UserMeals::whereDate('date', $tomorrow)->sum('quantity');
+        $tomorrow = Carbon::tomorrow();
+        $tomorrow_total_meal = UserMeals::whereDate('date', $tomorrow)->sum('quantity');
 
-        $Month_check = MonthlyMealRates::whereMonth('month', $this_month)->first();
-        $mealRate = 0;
-
-        if ($Month_check !== null) {
-            $mealRate = $Month_check->meal_rate;
-        }else {
-            $defaultMealRate = 10;
-            $mealRate = $defaultMealRate;
-        }
-
-        $total_expense = $mealRate * $totalMeal;
-        $total_due = $total_expense - $userpayment;
-
-        return view('admin.dashboard.home', compact('userpayment', 'totalMeal', 'tomorrowtotalMeal', 'total_due','mealRate','user'));
+        return view('admin.dashboard.home', compact('total_income', 'total_expense','total_meal','total_meal_rate','balance','tomorrow_total_meal'));
     }
 
 

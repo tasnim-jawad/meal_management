@@ -1,8 +1,22 @@
 <div class="page-sidebar custom-scrollbar ">
     <ul class="sidebar-menu" >
+        <div class="sidebar-title">
+            @if (auth()->user()->role_id == 3)
+                Staff
+            @else
+                Student
+            @endif
+
+
+        </div>
         <li>
-            <div class="sidebar-title">Mangement</div><a href="javascript:void(0)">
                 <i><a href="{{ route('frontEnd.user_profile.show') }}"></i><span>Profile</span><i
+                    class="fa fa-angle-right pull-right"></i></a>
+
+        </li>
+        <li>
+            <a href="javascript:void(0)">
+                <i><a href="{{ route('frontEnd.Meal_Booking.Meal_Booking') }}"></i><span>Dashboard</span><i
                     class="fa fa-angle-right pull-right"></i></a>
 
         </li>

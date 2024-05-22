@@ -11,7 +11,13 @@
                     <p data-aos="fade-up" data-aos-delay="100">Sed autem laudantium dolores. Voluptatem itaque ea consequatur
                         eveniet. Eum quas beatae cumque eum quaerat.</p>
                     <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-                        <a href="{{ route('frontEnd.Meal_Booking.Meal_Booking') }}" class="btn-book-a-table">Book your meal</a>
+                        @if (auth()->check() && (auth()->user()->role_id == 4 || auth()->user()->role_id == 3))
+                            <a href="{{ route('frontEnd.Booking.add_user_Meal_Booking') }}" class="btn-book-a-table">Book your meal</a>
+                        @elseif( auth()->check() && auth()->user()->role_id == 1 )
+                            <a href="{{ route('admin.dashboard.home') }}" class="btn-book-a-table">Dashboard</a>
+                        @else
+                            <a href="{{ route('admin.dashboard.home') }}" class="btn-book-a-table">login</a>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start food_img">

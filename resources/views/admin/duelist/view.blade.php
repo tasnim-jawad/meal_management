@@ -23,7 +23,7 @@
 
             <tbody>
                 @php $i = 1 @endphp
-                @foreach ($user_meals->userMeal as $meal)
+                @foreach ($result->userMeal as $meal)
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $user_meals->name }}</td>

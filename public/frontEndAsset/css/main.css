@@ -611,6 +611,7 @@ section {
         transition: 0.5s;
         z-index: 9999;
         margin: 0 10px 0 20px;
+        display: none;
     }
 
     .mobile-nav-hide {

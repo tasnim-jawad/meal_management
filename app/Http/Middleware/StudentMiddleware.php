@@ -17,7 +17,7 @@ class StudentMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            if (Auth::user()->role_id == 4 ) {
+            if (Auth::user()->role_id == 4 || Auth::user()->role_id == 3) {
                 return $next($request);
             } else {
                 return redirect('/');

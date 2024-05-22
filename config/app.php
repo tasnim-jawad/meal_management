@@ -195,8 +195,9 @@ return [
     //     // 'Example' => App\Facades\Example::class,
     // ])->toArray(),
 
-    // 'aliases' => [
-    //     'PDF' => Barryvdh\DomPDF\Facade::class,
-    // ],
+    'aliases' => [
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'Auth' => Illuminate\Support\Facades\Auth,
+    ],
 
 ];

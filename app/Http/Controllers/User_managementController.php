@@ -14,12 +14,30 @@ use Illuminate\Support\Facades\Validator;
 
 class User_managementController extends Controller
 {
+    public function all(){
+        $query = User::query();
+        // dd(request()->has('search_key'),request()->search_key);
+        if (request()->has('search_key')) {
+            $key = request()->search_key;
+            $query->where(function ($q) use ($key) {
+                return $q->Where('mobile', "LIKE", '%' . $key . '%')
+                    ->orWhere('name', "LIKE", '%' . $key . '%')
+                    ->orWhere('email', "LIKE", '%' . $key . '%');
+            });
+        }
+        $users = $query->with('user_role')->paginate(15);
+        return view('admin.user_management.all_user', [
+            'saveusers' => $users,
+        ]);
+    }
     public function add_user()
     {
         $departments = Department::get()->all();
         $user_role = UserRole::get()->all();
         return view('admin.user_management.add_user',compact('departments','user_role'));
     }
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -76,6 +94,7 @@ class User_managementController extends Controller
         return back()->with('message', 'Info saved successfully');
     }
 
+
     private function saveImage($request)
     {
         $image = $request->file('image');
@@ -88,7 +107,7 @@ class User_managementController extends Controller
 
     public function all_user()
     {
-        $users = User::with('user_role')->get();
+        $users = User::with('user_role')->paginate(20);
         // dd($users);
         return view('admin.user_management.all_user', [
             'saveusers' => $users,
@@ -127,6 +146,7 @@ class User_managementController extends Controller
             return !empty($input->password) || !empty($input->password_confirmation);
         });
 
+
         if ($validator->fails()) {
 
             $errors = $validator->errors()->all();
@@ -136,7 +156,6 @@ class User_managementController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         $department = Department::where('depart_id',$request->department)->get()->first();
-        // dd( $request->all(),$request->department,$request->input('department'),$department->department);
         $user->name = $request->name;
         $user->role_id = $request->role_id;
         $user->mobile = $request->mobile;

@@ -21,8 +21,8 @@
                         <div class="stat-widget-dashboard">
                             <div class="d-flex">
                                 <div class="text-end">
-                                    <h4 class="mt-0 counter font-primary">{{ $payment }}</h4>
-                                    <span>Total Amount</span>
+                                    <h4 class="mt-0 counter font-primary">{{ $total_payment_monthly }}</h4>
+                                    <span>Total Deposite</span>
                                 </div>
                             </div>
                             <div class="dashboard-chart-container">
@@ -40,11 +40,11 @@
                         <div class="stat-widget-dashboard">
                             <div class="d-flex">
                                 <div class="text-end">
-                                    <h4 class="mt-0 counter font-primary">{{ $due }}</h4>
-                                    <span>Total Due</span>
+                                    <h4 class="mt-0 counter font-primary">{{ round($balance) }}</h4>
+                                    <span>Present Balance</span>
                                 </div>
                             </div>
-                            <div class "dashboard-chart-container">
+                            <div class="dashboard-chart-container">
                                 <div id="line-chart-sparkline-dashboard1"
                                     class="flot-chart-placeholder line-chart-sparkline"><canvas width="223" height="50"></canvas>
                                 </div>
@@ -59,8 +59,8 @@
                         <div class="stat-widget-dashboard">
                             <div class="d-flex">
                                 <div class="text-end">
-                                    <h4 class="mt-0 counter font-primary">{{ $Totalmeal }}</h4>
-                                    <span>Total meal</span>
+                                    <h4 class="mt-0 counter font-primary">{{ $total_monthly_meal }}</h4>
+                                    <span>Total meal this month</span>
                                 </div>
                             </div>
                             <div class="dashboard-chart-container">
@@ -78,7 +78,7 @@
                         <div class="stat-widget-dashboard">
                             <div class="d-flex">
                                 <div class="text-end">
-                                    <h4 class="mt-0 counter font-primary">{{ $mealRate }}</h4>
+                                    <h4 class="mt-0 counter font-primary">{{ round($meal_rate) }}</h4>
                                     <span>Meal Rate</span>
                                 </div>
                             </div>

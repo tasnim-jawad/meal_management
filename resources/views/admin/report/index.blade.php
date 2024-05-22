@@ -24,23 +24,23 @@
                     <tbody>
                         <tr>
                             <td>Total Meal this month</td>
-                            <td>{{$total_meal}}</td>
+                            <td>{{$total_monthly->total_meal}}</td>
                         </tr>
                         <tr>
                             <td>Total income this month</td>
-                            <td>{{$total_income}}</td>
+                            <td>{{$total_monthly->total_income}}</td>
                         </tr>
                         <tr>
                             <td>Total expanse this month</td>
-                            <td>{{$total_expense}}</td>
+                            <td>{{$total_monthly->total_expense}}</td>
                         </tr>
                         <tr>
-                            <td>Total @if($due > 0 ) Due @else surplus @endif this month</td>
-                            <td>{{abs($due)}}</td>
+                            <td>Total @if($total_monthly->balance < 0 ) Due @else surplus @endif this month</td>
+                            <td>{{abs($total_monthly->balance)}}</td>
                         </tr>
                         <tr>
                             <td>Meal rate this month</td>
-                            <td>{{$meal_rate}}</td>
+                            <td>{{$total_monthly->total_meal_rate}}</td>
                         </tr>
                     </tbody>
                 </table>
