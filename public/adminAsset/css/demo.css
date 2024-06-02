@@ -114,3 +114,8 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+
+.active {
+    background: rgba(134, 146, 208, .06)
+}

@@ -3,14 +3,9 @@
     <div class="card">
         <div class="card-header border-bottom">
             <h5 class="card-title mb-3">All USER</h5>
-            <div class="d-flex justify-content-between align-items-center row pb-2 gap-3 gap-md-0">
-                <div class="col-md-4 user_role"></div>
-                <div class="col-md-4 user_plan"></div>
-                <div class="col-md-4 user_status"></div>
-            </div>
         </div>
-       
-        <form action="{{ route('admin.user.search') }}" method="GET">
+
+        <form action="{{ route('admin.user.search') }}" method="POST">
             @csrf
             <label for="search"></label>
             <input type="text" name="search" id="search" placeholder="Search by Name, Mobile Number, or Department:">
@@ -20,7 +15,7 @@
 
         <div class="card-datatable table-responsive">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                
+
                 <table class="datatables-users table border-top dataTable no-footer dtr-column" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
                     <thead>
                         <tr>

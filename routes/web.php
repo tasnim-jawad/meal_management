@@ -26,6 +26,7 @@ use App\Http\Controllers\duelistcontroller;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\settingController;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,7 +105,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
         Route::get('/add_user', [User_managementController::class, 'add_user'])->name('admin.user_management.add_user');
         Route::post('/store', [User_managementController::class, 'store'])->name('admin.user_management.store');
         Route::get('/all_user', [User_managementController::class, 'all_user'])->name('admin.user_management.all_user');
-        Route::get('/search', [User_managementController::class, 'all'])->name('admin.search.all');
+        Route::post('/search', [User_managementController::class, 'all'])->name('admin.search.all');
         Route::get('/edit/{id}', [User_managementController::class, 'edit'])->name('admin.user_management.edit');
         Route::post('/update/{id}', [User_managementController::class, 'update'])->name('admin.user_management.update');
         Route::get('/delete/{id}', [User_managementController::class, 'delete'])->name('admin.user_management.delete');
@@ -124,7 +125,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
         Route::prefix('user')->group(function () {
             Route::get('/all_user', [allUserController::class, 'all_user'])->name('admin.user.all_user');
-            Route::get('/search', [allUserController::class, 'searchUsers'])->name('admin.user.search');
+            Route::post('/search', [allUserController::class, 'searchUsers'])->name('admin.user.search');
             Route::get('/delete/{id}', [allUserController::class, 'delete'])->name('admin.user.delete');
             Route::get('/details/{department_id}', [allUserController::class, 'details'])->name('admin.user.details');
         });
@@ -171,15 +172,16 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
             Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
             Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
-            Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
+            Route::post('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
 
             Route::get('/all-cook-salary', [CookSalaryController::class, 'all_cook_salary'])->name('admin.daily_expense.all_cook_salary');
-            Route::get('/all-cook-salary-search', [CookSalaryController::class, 'all_cook_salary_search'])->name('admin.daily_expense.all_cook_salary_search');
+            Route::post('/all-cook-salary-search', [CookSalaryController::class, 'all_cook_salary_search'])->name('admin.daily_expense.all_cook_salary_search');
             Route::get('/add-cook-salary', [CookSalaryController::class, 'add_cook_salary'])->name('admin.daily_expense.add_cook_salary');
             Route::post('/store-cook-salary', [CookSalaryController::class, 'store_cook_salary'])->name('admin.daily_expense.store_cook_salary');
             Route::get('/edit-cook-salary/{id}', [CookSalaryController::class, 'edit_cook_salary'])->name('admin.daily_expense.edit_cook_salary');
             Route::post('/update-cook-salary', [CookSalaryController::class, 'update_cook_salary'])->name('admin.daily_expense.update_cook_salary');
-            Route::post('/delete-cook-salary', [CookSalaryController::class, 'update_cook_salary'])->name('admin.daily_expense.update_cook_salary');
+            Route::delete('/delete-cook-salary', [CookSalaryController::class, 'delete_cook_salary'])->name('admin.daily_expense.delete_cook_salary');
+            Route::post('/pay-cook-salary', [CookSalaryController::class, 'pay_cook_salary'])->name('admin.daily_expense.pay_cook_salary');
 
         });
 
@@ -196,10 +198,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::get('/add_payment', [paymentController::class, 'add_payment'])->name('admin.user_payment.add_payment');
             Route::post('/store', [paymentController::class, 'store'])->name('admin.user_payment.store');
             Route::get('/all_user_payment', [paymentController::class, 'all_user_payment'])->name('admin.user_payment.all_payment');
-            // Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
-            // Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
-            // Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
-            // Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
 
         });
 
@@ -210,7 +208,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
 
         Route::prefix('report')->group(function () {
             Route::get('/index', [ReportController::class, 'index'])->name('admin.report.index');
-            Route::get('/search', [ReportController::class, 'search'])->name('admin.report.search');
+            Route::post('/search', [ReportController::class, 'search'])->name('admin.report.search');
             Route::get('/user-report', [ReportController::class, 'user_report'])->name('admin.report.user_report');
             Route::get('/user-report/user-search/{user_id}', [ReportController::class, 'user_search'])->name('admin.report.user_report.user_search');
             Route::get('/user-report/user-monthly', [ReportController::class, 'user_search_monthly'])->name('admin.report.user_report.user_search_monthly');
@@ -219,7 +217,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
         Route::prefix('due')->group(function () {
             Route::get('/daily-data', [DueController::class, 'daily_data'])->name('admin.due.daily_data');
             Route::get('/monthly-data', [DueController::class, 'monthly_data'])->name('admin.due.monthly_data');
-            Route::get('/yearly-data', [DueController::class, 'yearly_data'])->name('admin.due.yearly_data');
+            Route::get('/current-data', [DueController::class, 'current_data'])->name('admin.due.current_data');
+            Route::post('/received-due', [DueController::class, 'received_due'])->name('admin.due.received_due');
+            Route::post('/return-advance', [DueController::class, 'return_advance'])->name('admin.due.return_advance');
         });
 
         Route::prefix('setting')->group(function () {
@@ -230,14 +230,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
             Route::post('/update/{id}', [settingController::class, 'update'])->name('admin.setting.update');
             Route::get('/delete/{id}', [settingController::class, 'delete'])->name('admin.setting.delete');
 
-            // Route::get('/all_user_payment', [paymentController::class, 'all_user_payment'])->name('admin.user_payment.all_payment');
-            // Route::get('/find/{id}', [dailyExpenseController::class, 'find'])->name('admin.daily_expense.edit');
-            // Route::post('/update/{id}', [dailyExpenseController::class, 'update'])->name('admin.daily_expense.update');
-            // Route::get('/delete/{id}', [dailyExpenseController::class, 'delete'])->name('admin.daily_expense.delete');
-            // Route::get('/search', [dailyExpenseController::class, 'search'])->name('admin.daily_expense.search');
-
         });
 
     });
 
+});
+
+Route::get('/report-end-of-month', function(){
+    Artisan::call('app:eomr');
 });

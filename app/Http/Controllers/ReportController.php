@@ -17,19 +17,7 @@ class ReportController extends Controller
         $year = $now->year;
         $month = $now->month;
 
-        $total_monthly = total_monthly($month,$year );
-        // dd($total_monthly );
-        // $monthly_meal = UserMeals::whereYear('date',$year)->whereMonth('date',$month)->get();
-        // $total_meal = $monthly_meal->sum('quantity');
-
-        // $income = UserPayments::whereYear('month',$year)->whereMonth('month',$month)->get();
-        // $total_income = $income->sum('amount');
-
-        // $expense = daily_expense::whereYear('bajar_date',$year)->whereMonth('bajar_date',$month)->get();
-        // $total_expense = $expense->sum('total');
-
-        // $meal_rate = $total_meal != 0 ? $total_expense / $total_meal : 0;
-        // $due = $total_expense - $total_income;
+        $total_monthly = meal_rate($month,$year);
 
         return view('admin.report.index',compact( 'total_monthly'));
     }
@@ -41,20 +29,7 @@ class ReportController extends Controller
         $year = $now->year;
         $month = $now->month;
 
-        $total_monthly = total_monthly($month,$year );
-        // $monthly_meal = UserMeals::whereYear('date',$year)->whereMonth('date',$month)->get();
-        // $total_meal = $monthly_meal->sum('quantity');
-
-        // $income = UserPayments::whereYear('month',$year)->whereMonth('month',$month)->get();
-        // $total_income = $income->sum('amount');
-
-        // $expense = daily_expense::whereYear('bajar_date',$year)->whereMonth('bajar_date',$month)->get();
-        // $total_expense = $expense->sum('total');
-
-        // $meal_rate = $total_meal != 0 ? $total_expense / $total_meal : 0;
-        // dd($meal_rate,$total_expense,$total_meal);
-        // $due = $total_expense - $total_income;
-        // dd($total_income,$total_expense,$due );
+        $total_monthly = meal_rate($month,$year );
 
         return view('admin.report.index',compact( 'total_monthly'));
     }
@@ -64,6 +39,7 @@ class ReportController extends Controller
         // dd($users);
         return view('admin.report.user_report',compact('users'));
     }
+
     public function user_search_monthly(){
 
         // dd(request()->all());
@@ -87,7 +63,7 @@ class ReportController extends Controller
         $user = User::where('id',$user_id)->with('user_role')->get()->first();
         // dd($user);
         // $meal_rate = meal_rate($month,$year)->meal_rate;
-        $meal_rate = total_monthly($month,$year)->total_meal_rate;
+        $meal_rate = meal_rate($month,$year)->meal_rate;
 
         $monthly_meal_users = monthly_meal_users($month,$year, $user_id);
         $monthly_meal = $monthly_meal_users->monthly_meal;

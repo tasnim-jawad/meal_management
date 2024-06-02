@@ -20,6 +20,7 @@
                 <tr>
                     <th>serial</th>
                     <th>User</th>
+                    <th>Mobile</th>
                     <th>Meal</th>
                     <th>Meal rate</th>
                     <th>cost</th>
@@ -36,12 +37,13 @@
                         <td>{{ $key + 1}}</td>
                         @foreach ($user_data as $user_id=>$user)
                             <td>{{ $user['user_info']['name'] }}</td>
+                            <td>{{ $user['user_info']['mobile'] }}</td>
                             <td>{{ $user['all_data_monthly']['user_total_meal'] }}</td>
-                            <td>{{ $user['all_data_monthly']['total_meal_rate'] }}</td>
-                            <td>{{ $user['all_data_monthly']['user_total_cost'] }}</td>
+                            <td>{{round($user['all_data_monthly']['total_meal_rate']) }}</td>
+                            <td>{{round($user['all_data_monthly']['user_total_cost']) }}</td>
                             <td>{{ $user['all_data_monthly']['user_total_payment'] }}</td>
-                            <td>{{ $user['all_data_monthly']['user_total_due'] }}</td>
-                            <td>{{ $user['all_data_monthly']['advance_payment'] }}</td>
+                            <td>{{round($user['all_data_monthly']['user_total_due']) }}</td>
+                            <td>{{round($user['all_data_monthly']['advance_payment']) }}</td>
                         @endforeach
                     </tr>
                 @endforeach

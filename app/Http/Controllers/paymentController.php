@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserPayments;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class paymentController extends Controller
 {
@@ -16,12 +17,25 @@ class paymentController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        // $request->validate([
+        //     'user_id' => 'required',
+        //     'month' => 'required',
+        //     'payment_date' => 'required',
+        //     'amount' => 'required|numeric'
+        // ]);
+        $validator = Validator::make(request()->all(), [
             'user_id' => 'required',
             'month' => 'required',
             'payment_date' => 'required',
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric|gt:0'
         ]);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                Toastr::error($error, 'Validation Error');
+            }
+            return back()->withErrors($validator)->withInput();
+        }
 
         $payments = new UserPayments();
         $payments->user_id = $request->user_id;

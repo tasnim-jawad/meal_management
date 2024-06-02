@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Brian2694\Toastr\Facades\Toastr;
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -16,22 +17,6 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class mealController extends Controller
 {
-    // public function add_meal(){
-    //     return 'text';
-    // }
-
-    // public function store()
-    // {
-    //      dd(request()->all());
-    //     $meal = new UserMeals();
-    //     $meal->users_id = request()->users_id;
-    //     $meal->quantity = request()->quantity;
-    //     $meal->date = request()->date;
-    //     $meal->save();
-    //     return response()->json('message', 'Info save successfully');
-    //     return response()->json(['message' => 'Info save successfully'], 200);
-    // }
-
     public function add_meal()
     {
         return view('admin.meal.add_meal');
@@ -40,66 +25,40 @@ class mealController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id', // Assuming user_id must exist in the 'users' table
-            'quantity' => 'required|integer|min:1', // Assuming quantity should be an integer greater than or equal to 1
-            'date' => 'required|date', // Assuming date should be a valid date format
+            'user_id' => 'required|exists:users,id',
+            'quantity' => 'required|integer|gt:0',
+            'date' => 'required|date',
         ]);
 
         if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
-
-        // dd(Auth::user());
 
         $meal = new UserMeals();
         $meal->user_id = $request->user_id;
         $meal->quantity = $request->quantity;
         $meal->date = $request->date;
         $meal->save();
-
+        Toastr::success('Meal added successfully','Success');
         return back()->with('message', 'Info saved successfully');
     }
-
-    // public function search(Request $request)
-    // {
-    //     $selectedMonth = $request->input('selectedMonth');
-    //     $selectedDate = Carbon::createFromFormat('Y-m-d', date('Y') . '-' . $selectedMonth . '-01');
-    //     $meals = UserMeals::whereMonth('date', $selectedDate->month)->get();
-
-    //     return view('admin.meal.all_meal', compact('meals'));
-    // }
 
     public function search(Request $request)
     {
         $selectedDate = $request->input('selectedDate');
 
         // Query your meals based on the selectedDate
-        $meals = UserMeals::whereDate('date', $selectedDate)->get();
+        $meals = UserMeals::whereDate('date', $selectedDate)->latest()->paginate(5);
 
         return view('admin.meal.all_meal', compact('meals'));
     }
 
-
-
-
     public function all_meal()
     {
-        return view('admin.meal.all_meal', [
-            'meals' => UserMeals::with('user')
-                        ->orderBy('date', 'desc')
-                        ->latest()
-                        ->get()
-        ]);
+        $today = Carbon::now()->format('Y-m-d');
+        $meals = UserMeals::with('user')->where('date',$today)->latest()->paginate(30);
+        return view('admin.meal.all_meal',compact('meals'));
     }
-
-    // public function all_meal()
-    // {
-
-    //     $meal=UserMeals::all();
-    //     return response()->json(["user" => $meal], 200);
-    // }
 
     public function find($id)
     {
@@ -107,37 +66,16 @@ class mealController extends Controller
         return view('admin.meal.edit', compact('meal'));
     }
 
-    // public function find(Request $request, $id)
-    // {
-    //     $meal = UserMeals::find($id);
-    //     return response()->json(["user" => $meal], 200);
-    // }
-
-
 
     public function update(Request $request, $id)
     {
         $meal = UserMeals::find($id);
         $meal->user_id = $request->name;
-        // $meal->users_id = $request->users_id;
         $meal->quantity = $request->quantity;
         $meal->date = $request->date;
         $meal->update();
         return redirect()->route('admin.meal.all_meal');
     }
-
-
-
-
-    // public function update(Request $request, $id)
-    // {
-    //     $meal = UserMeals::find($id);
-    //     $meal->users_id = $request->users_id;
-    //     $meal->quantity = $request->quantity;
-    //     $meal->date = $request->date;
-    //     $meal->update();
-    //     return response()->json(["user" => $meal], 200);
-    // }
 
     public function delete($id)
     {
@@ -145,28 +83,18 @@ class mealController extends Controller
         return redirect()->route('admin.meal.all_meal');
     }
 
-
-    // public function delete($id)
-    // {
-    //     UserMeals::where('id', $id)->delete();
-    //     return response()->json(['message' => 'Info delete successfully'], 200);
-    // }
-
     public function download_pdf($date = null){
 
         $query  = UserMeals::with('user')
                     ->orderBy('date', 'desc')
                     ->latest();
 
-        // $selectedDate = $request->input('selectedDate');
-        // dd($date);
         if($date){
             $query = UserMeals::whereDate('date', $date)
-                            ->with('user')
-                            ->orderBy('date', 'desc')
-                            ->latest();
+                                    ->with('user')
+                                    ->orderBy('date', 'desc')
+                                    ->latest();
         }
-        // dd($meals);
 
         $meals = $query->get()->toArray();
         $pdf = Pdf::loadView('admin.meal.meal_pdf',compact('meals'));
@@ -181,12 +109,7 @@ class mealController extends Controller
             $query = UserMeals::whereDate('date', $date)->with('user')->orderBy('date', 'desc')->latest();
         }
 
-
         $meals = $query->get()->toArray();
-        // $dataArray = [];
-        // All_meal_list_load.xlsx
-
-
         $reader = IOFactory::createReader('Xlsx');
         $spreadsheet = $reader->load('All_meal_list_load.xlsx');
 

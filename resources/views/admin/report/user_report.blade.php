@@ -61,7 +61,7 @@
                         </tr> --}}
                         <tr>
                             <td>Meal rate this month</td>
-                            <td id="meal_rate">{{$meal_rate?? ""}}</td>
+                            <td id="meal_rate">{{$meal_rate !== null ? round($meal_rate) : "" }}</td>
                         </tr>
                         <tr>
                             <td>Need to pay this month</td>

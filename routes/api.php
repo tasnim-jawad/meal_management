@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\mealBookingController;
 use App\Http\Controllers\Api\userInfoController;
 use App\Http\Controllers\User_managementController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -97,4 +98,11 @@ Route::middleware('auth:api')->group(function () {
 
     });
 
+
+    // report_end_of_month()
+
 });
+
+// Route::get('/report-end-of-month', function(){
+//     Artisan::call('app:eomr');
+// });

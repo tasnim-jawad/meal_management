@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header border-bottom">
             <h5 class="card-title mb-3">Search Filter</h5>
-            <form class="mb-3" action="{{ route('admin.report.search') }}" method="GET">
+            <form class="mb-3" action="{{ route('admin.report.search') }}" method="POST">
                 @csrf
                 <label for="month">Select month:</label>
                 <input type="month" name="month" id="month" class="form-control mb-2">
@@ -24,7 +24,7 @@
                     <tbody>
                         <tr>
                             <td>Total Meal this month</td>
-                            <td>{{$total_monthly->total_meal}}</td>
+                            <td>{{$total_monthly->total_meal_all}}</td>
                         </tr>
                         <tr>
                             <td>Total income this month</td>
@@ -40,7 +40,7 @@
                         </tr>
                         <tr>
                             <td>Meal rate this month</td>
-                            <td>{{$total_monthly->total_meal_rate}}</td>
+                            <td>{{round($total_monthly->meal_rate)}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -10,14 +10,13 @@
                 <div class="col-md-4 user_status"></div>
             </div>
 
-            <form action="{{ route('admin.daily_expense.search') }}" method="GET">
+            <form action="{{ route('admin.daily_expense.search') }}" method="POST">
                 @csrf
                 <label for="searchText">Search:</label>
                 <input class="form-control mb-2" type="text" name="searchText" id="searchText" placeholder="Enter search text">
                 <label for="selectedDate">Select Date:</label>
                 <input class="form-control mb-2" type="date" name="selectedDate" id="selectedDate">
                 <button type="submit" class="btn btn-primary ">Filter</button>
-                {{-- <a href="{{ route('admin.daily_expense.all_expense') }}" class="btn btn-danger btn-sm">Reset</a> --}}
             </form>
         </div>
         <div class="card-datatable table-responsive">
@@ -29,8 +28,8 @@
                         <th>quantity</th>
                         <th>unit</th>
                         <th>price</th>
-                        <th>total</th>
                         <th>bajar_date</th>
+                        <th>total</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -39,23 +38,39 @@
                     @foreach ($expense as $meal)
                         <tr>
                             <td>{{ $i++ }}</td>
-                            <td>{{ $meal->title }}</td>
-                            <td>{{ $meal->quantity }}</td>
-                            <td>{{ $meal->unit }}</td>
-                            <td>{{ $meal->price }}</td>
-                            <td>{{ $meal->total }}</td>
-                            <td>{{ $meal->bajar_date }}</td>
                             <td>
-                                <a href="{{ route('admin.daily_expense.edit', $meal->id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ route('admin.daily_expense.delete', $meal->id) }}" class="btn btn-danger">Delete</a>
+                                @if($meal->title === 'khala')
+                                    {{'cook salary'}}
+                                @else
+                                    {{ $meal->title }}
+                                @endif
+                            </td>
+                            <td>{{ $meal->quantity }}</td>
+                            <td>
+                                @if($meal->unit === 'salary')
+                                    {{""}}
+                                @else
+                                    {{ $meal->unit }}
+                                @endif
+                            </td>
+                            <td>{{ $meal->price }}</td>
+                            <td>{{ $meal->bajar_date }}</td>
+                            <td>{{ $meal->total }}</td>
+                            <td>
+                                @if($meal->unit === 'salary' && $meal->title === 'khala')
+                                    {{""}}
+                                @else
+                                    <a href="{{ route('admin.daily_expense.edit', $meal->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('admin.daily_expense.delete', $meal->id) }}" class="btn btn-danger">Delete</a>
+                                @endif
+
                             </td>
                         </tr>
                     @endforeach
                         <tr>
                             <td></td>
-                            <td colspan="4">Total Expense</td>
+                            <td colspan="5" class="text-end">Total Expense</td>
                             <td >{{$total_expense}}</td>
-                            <td></td>
                             <td></td>
                         </tr>
                 </tbody>

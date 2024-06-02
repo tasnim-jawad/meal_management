@@ -50,7 +50,7 @@ class User_managementController extends Controller
             'batch_id' => 'required',
             'address' => 'required',
             'password' => 'required|min:8|confirmed', // Add "confirmed" rule for password
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
         ], [
             'password.confirmed' => 'Password and Confirm Password do not match',
         ]);

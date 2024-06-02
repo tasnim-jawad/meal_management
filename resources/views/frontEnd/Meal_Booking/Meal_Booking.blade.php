@@ -91,6 +91,25 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-lg-6 col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="stat-widget-dashboard">
+                            <div class="d-flex">
+                                <div class="text-end">
+                                    <h4 class="mt-0 counter font-primary">{{ round($monthly_cost) }}</h4>
+                                    <span>This month expance</span>
+                                </div>
+                            </div>
+                            <div class="dashboard-chart-container">
+                                <div id="line-chart-sparkline-dashboard1" class="flot-chart-placeholder line-chart-sparkline">
+                                    <canvas width="223" height="50"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

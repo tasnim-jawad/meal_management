@@ -17,7 +17,7 @@
                                 <select class="form-select select2 meal_user" name="user_id" aria-label="Default select example">
                                     <option selected>Open this User menu</option>
                                     @foreach (App\Models\User::get() as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : ""}}>{{$user->mobile}} --> {{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -13,7 +13,7 @@
             <form class="mb-3" action="{{ route('admin.meal.search') }}" method="GET">
                 @csrf
                 <label for="selectedDate">Select Date:</label>
-                <input type="date" name="selectedDate" id="selectedDate">
+                <input class="form-control mb-2" type="date" name="selectedDate" id="selectedDate">
                 <button type="submit" class="btn btn-primary">Filter</button>
                 <a href="{{ route('admin.meal.all_meal') }}" class="btn btn-danger">Reset</a>
             </form>
@@ -54,6 +54,13 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="row mx-2">
+                <div class="col-sm-12 col-md-12 mt-3">
+                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                        {{ $meals->links() }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

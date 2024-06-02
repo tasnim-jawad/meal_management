@@ -1,12 +1,12 @@
 @extends('admin.master')
 @section('content')
     <div class="card mb-3">
-        <div class="card-header">Search Cook Salary by date</div>
+        <div class="card-header">Search Monthly Cook Salary</div>
         <div class="card-body">
-            <form action="{{ route('admin.daily_expense.all_cook_salary_search') }}" method="GET">
+            <form action="{{ route('admin.daily_expense.all_cook_salary_search') }}" method="POST">
                 @csrf
-                <label for="search">date</label>
-                <input class="form-control mb-2" type="date" name="search" id="search" >
+                <label for="search">Month</label>
+                <input class="form-control mb-2" type="month" name="search" id="search" >
                 <button type="submit" class="btn btn-primary">Filter</button>
                 <a href="{{ route('admin.daily_expense.all_cook_salary') }}" class="btn btn-danger">Reset</a>
             </form>
@@ -35,7 +35,12 @@
                             <td>{{$salary->total}}</td>
                             <td>
                                 <a href="{{ route('admin.daily_expense.edit_cook_salary', $salary->id) }}" class="btn btn-primary">Edit</a>
-                                <a href="#" class="btn btn-danger">Delete</a>
+                                <button class="btn btn-danger" onclick="delete_cook_salary('{{$salary->id}}')" >Delete</button>
+                                <form action="{{ route('admin.daily_expense.delete_cook_salary')}}" id="delete_form_{{$salary->id}}" method="POST" class="d-none">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="id" value="{{ $salary->id }}">
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -51,3 +56,16 @@
         </div>
     </div>
 @endsection
+
+@push('end_js')
+    <script>
+        function delete_cook_salary(id){
+            console.log('click delete');
+            if(confirm('are you sure you want to delete?')){
+                const form = document.getElementById(`delete_form_${id}`);
+                form.submit();
+            }
+
+        }
+    </script>
+@endpush

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\daily_expense;
+use App\Models\MonthlyBalance;
 use App\Models\UserMeals;
 use App\Models\UserPayments;
 use App\Models\MonthlyMealRates;
@@ -122,30 +123,29 @@ class frontEndController extends Controller
     public function Meal_Booking()
     {
         $user_id = auth()->user()->id;
-        $user = User::where('id',$user_id)->get()->first();
-
         $now = Carbon::now();
         $year = $now->year;
         $month = $now->month;
 
-        $total_expence = daily_expense::all()->sum('total');
-        $total_meal = UserMeals::all()->sum('quantity');
-        $total_date = UserMeals::select('date')->get();
-        $total_date_array = $total_date->pluck('date')->toArray();
-        $total_month = $this->unique_month_count($total_date_array);
-
-        $cook_salary = Settings::latest()->first()->cook_salary;
-        $total_cook_salary = $cook_salary * $total_month;
-
-        $total_meal_rate = ($total_expence + $total_cook_salary) / $total_meal;
-
-        $meal_rate = total_monthly($month,$year)->total_meal_rate;
+        $meal_rate = meal_rate($month,$year)->meal_rate;
         $monthly_meal_users = monthly_meal_users($month,$year,$user_id);
         $total_monthly_meal = $monthly_meal_users->total_monthly_meal;
         $monthly_payment_users = monthly_payment_users($month,$year,$user_id);
         $total_payment_monthly = $monthly_payment_users->total_payment_monthly;
-        $balance = $total_payment_monthly - ($total_monthly_meal * $meal_rate);
+        $monthly_cost = $total_monthly_meal * $meal_rate;
 
-        return view('frontEnd.Meal_Booking.Meal_Booking', compact('meal_rate', 'total_monthly_meal', 'total_payment_monthly', 'balance'));
+        $previous_data = MonthlyBalance::where('user_id',$user_id )->first();
+        $previous_due = $previous_data->due?? 0 ;
+        $previous_advance = $previous_data->advance?? 0;
+
+        if($previous_due > 0){
+            $balance = $total_payment_monthly - $monthly_cost - $previous_due;
+        }elseif($previous_advance > 0){
+            $balance = $total_payment_monthly - $monthly_cost + $previous_due;
+        }else{
+            $balance = $total_payment_monthly - $monthly_cost;
+        }
+
+        return view('frontEnd.Meal_Booking.Meal_Booking', compact('meal_rate', 'total_monthly_meal', 'total_payment_monthly','monthly_cost', 'balance'));
     }
 }

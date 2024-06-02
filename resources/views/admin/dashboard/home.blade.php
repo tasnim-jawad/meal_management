@@ -1,6 +1,16 @@
 @extends('admin.master')
 @section('content')
     <div class="row">
+        <!-- Previous Balance -->
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
+            <div class="card" style="height: 200px">
+                <div class="card-body">
+                    <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
+                    <h5 class="card-title mb-1 pt-2">{{round($previous_balance)}}</h5>
+                    <p class="mb-2 mt-1">Previous Month Balance</p>
+                </div>
+            </div>
+        </div>
         <!-- Total income -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
@@ -22,6 +32,48 @@
             </div>
         </div>
 
+        {{-- Balance this month --}}
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
+            <div class="card" style="height: 200px">
+                <div class="card-body">
+                    <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
+                    <h5 class="card-title mb-1 pt-2">{{round($current_balance)}}</h5>
+                    <p class="mb-2 mt-1">Balance</p>
+                </div>
+            </div>
+        </div>
+
+
+        {{-- this month cook salary --}}
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
+            <div class="card" style="height: 200px">
+                <div class="card-body">
+                    <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
+                    <h5 class="card-title mb-1 pt-2 ">
+                        {{round($total_cook_salary)}}
+                        @if($cook_salary_pay_status == 'Paid')
+                            <span class="badge text-bg-success ms-2">{{$cook_salary_pay_status}}</span>
+                        @else
+                            <span class="badge text-bg-danger ms-2">{{$cook_salary_pay_status}}</span>
+                        @endif
+                    </h5>
+                    <p class="mb-2 mt-1">Current month Cook salary</p>
+                </div>
+            </div>
+        </div>
+        {{-- this month cook salary --}}
+        <div class="col-xl-3 col-md-4 col-6 mb-4">
+            <div class="card" style="height: 200px">
+                <div class="card-body">
+                    <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
+                    <h5 class="card-title mb-1 pt-2">{{round($cash_in_hand)}}</h5>
+                    <p class="mb-2 mt-1">Cash in hand</p>
+                </div>
+            </div>
+        </div>
+
+
+
         <!-- Total meal -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
@@ -33,18 +85,7 @@
             </div>
         </div>
 
-        <!-- Total Profit -->
-        <div class="col-xl-3 col-md-4 col-6 mb-4">
-            <div class="card" style="height: 200px">
-                <div class="card-body">
-                    <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">{{round($balance)}}</h5>
-                    <p class="mb-2 mt-1">Balance</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Sales -->
+        <!-- tomorrow total meal -->
         <div class="col-xl-3 col-md-4 col-6 mb-4">
             <div class="card" style="height: 200px">
                 <div class="card-body">
@@ -60,11 +101,15 @@
             <div class="card" style="height: 200px">
                 <div class="card-body">
                     <div class="badge p-2 bg-label-danger mb-2 rounded"><i class="ti ti-currency-dollar ti-md"></i></div>
-                    <h5 class="card-title mb-1 pt-2">{{round($total_meal_rate)}}</h5>
+                    <h5 class="card-title mb-1 pt-2">{{round($meal_rate)}}</h5>
                     <p class="mb-2 mt-1">Current month meal rate</p>
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
 
 
